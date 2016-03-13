@@ -1,0 +1,16 @@
+<table [mf-table]="data" #mf="mfTable">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Score</th>
+            <th>Abec</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="#item of mf.data">
+            <td>{{item.name}}</td>
+            <td>{{item.score}}</td>
+            <td>{{item.abec}}</td>
+        </tr>
+    </tbody>
+</table>
