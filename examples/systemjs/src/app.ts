@@ -5,8 +5,8 @@ import {TableDirective} from 'mf-angular2-table/components';
 
 @Component({
     selector: 'app',
-    directives: [TableDirective],
-    templateUrl: 'src/app.html'
+    templateUrl: 'src/app.html',
+    directives: [TableDirective]
 })
 export class App {
 

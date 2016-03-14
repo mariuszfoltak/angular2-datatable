@@ -2,7 +2,7 @@ import {
     Directive,
     Input,
     OnInit
-} from "angular2/core";
+} from "../../examples/systemjs/node_modules/angular2/core.d";
 
 @Directive({
     selector: 'table[mf-table]',
@@ -16,5 +16,9 @@ export class TableDirective implements OnInit {
 
     public ngOnInit() {
         this.data = this.userData;
+    }
+
+    public sort(sortBy: any) {
+        this.data = _.sortBy(this.userData, sortBy);
     }
 }
