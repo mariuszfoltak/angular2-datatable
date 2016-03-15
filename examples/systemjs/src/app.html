@@ -1,16 +1,44 @@
-<table [mf-table]="data" #mf="mfTable">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Score</th>
-            <th>Abec</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="#item of mf.data">
-            <td>{{item.name}}</td>
-            <td>{{item.score}}</td>
-            <td>{{item.abec}}</td>
-        </tr>
-    </tbody>
-</table>
+<div class="container">
+    <div class="col-xs-8 col-md-offset-2">
+
+        <table class="table table-striped" [mfTable]="data" #mf="mfTable">
+            <thead>
+            <tr>
+                <th><mfSort by="name">Name</mfSort></th>
+                <th><mfSort by="email">Email</mfSort></th>
+                <th><mfSort by="age">Age</mfSort></th>
+                <th><mfSort by="city">City</mfSort></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="#item of mf.data">
+                <td>{{item.name}}</td>
+                <td>{{item.email}}</td>
+                <td class="text-right">{{item.age}}</td>
+                <td>{{item.city}}</td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+    <div class="col-xs-6 col-md-offset-3">
+
+        <table class="table table-striped" [mfTable]="data" #mf2="mfTable">
+            <thead>
+            <tr>
+                <th><mfSort by="name">Name</mfSort></th>
+                <th><a (click)="mf2.sort('score')">Score</a></th>
+                <th>Abec</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="#item of mf2.data">
+                <td>{{item.name}}</td>
+                <td>{{item.score}}</td>
+                <td>{{item.abec}}</td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>

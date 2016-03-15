@@ -1,1 +1,2 @@
-export * from './lib/table.directive';
+export {MfTable} from './lib/MfTable';
+export {MfSort} from './lib/MfSort';

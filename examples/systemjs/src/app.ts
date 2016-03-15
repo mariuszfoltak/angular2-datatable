@@ -1,37 +1,27 @@
 import {Component} from 'angular2/core';
 import {bootstrap} from 'angular2/platform/browser';
-import {TableDirective} from 'mf-angular2-table/components';
+import {DatePipe} from "angular2/common";
+import {HTTP_PROVIDERS, Http} from "angular2/http";
+import {MfTable, MfSort} from 'mf-angular2-table/components';
 
 
 @Component({
     selector: 'app',
     templateUrl: 'src/app.html',
-    directives: [TableDirective]
+    providers: [HTTP_PROVIDERS],
+    directives: [MfTable,MfSort],
+    pipes: [DatePipe]
 })
 export class App {
 
-    public data:any[] = [
-        {
-            name: 'abc',
-            score: 3,
-            abec: '123'
-        },
-        {
-            name: 'def',
-            score: 4,
-            abec: '456'
-        },
-        {
-            name: 'ghi',
-            score: 5,
-            abec: '678'
-        },
-        {
-            name: 'jkl',
-            score: 6,
-            abec: '789'
-        }
-    ];
+    private data = [];
+
+    constructor(private http: Http) {
+        http.get("/src/data.json")
+            .subscribe((data)=>{
+                this.data = data.json();
+            });
+    }
 
 }
 

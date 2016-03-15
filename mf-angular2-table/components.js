@@ -1,1 +1,2 @@
-exports.TableDirective = require('./lib/table.directive').TableDirective;
+exports.MfTable = require('./lib/MfTable').MfTable;
+exports.MfSort = require('./lib/MfSort').MfSort;
