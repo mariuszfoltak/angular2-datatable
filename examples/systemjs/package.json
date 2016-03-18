@@ -6,11 +6,12 @@
   "scripts": {
     "watch": "rm -rf build && mkdir build && tsc -w",
     "build": "rm -rf build && mkdir build && tsc || true",
-    "start": "http-server -c-1 ."
+    "start": "lite-server"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "lite-server": "^2.1.0",
     "typescript": "1.8.7"
   },
   "dependencies": {
