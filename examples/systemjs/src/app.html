@@ -1,56 +1,51 @@
 <div class="container">
     <div class="col-xs-8 col-md-offset-2">
 
-        <input [ngModel]="activePage" (ngModelChange)="activePage = toInt($event)"/>
-        <input [ngModel]="rowsOnPage" (ngModelChange)="rowsOnPage = toInt($event)"/>
+        <div class="page-header">
+            <h1>
+                <span>Angular2 DataTable component</span><br/>
+                <small>by mariuszfoltak</small>
+            </h1>
+        </div>
 
-        <table class="table table-striped" [mfTable]="data" #mf="mfTable">
-            <thead>
-            <tr>
-                <th style="width: 20%"><mfDefaultSorter by="name">Name</mfDefaultSorter></th>
-                <th style="width: 50%"><mfDefaultSorter by="email">Email</mfDefaultSorter></th>
-                <th style="width: 10%"><mfDefaultSorter by="age">Age</mfDefaultSorter></th>
-                <th style="width: 20%"><mfDefaultSorter by="city">City</mfDefaultSorter></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="#item of mf.data">
-                <td>{{item.name}}</td>
-                <td>{{item.email}}</td>
-                <td class="text-right">{{item.age}}</td>
-                <td>{{item.city}}</td>
-            </tr>
-            </tbody>
-            <tfoot>
+        <h2>Simple data table</h2>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">User information</div>
+
+            <table class="table table-striped" [mfData]="data" #mf="mfDataTable">
+                <thead>
+                <tr>
+                    <th style="width: 20%">
+                        <mfDefaultSorter by="name">Name</mfDefaultSorter>
+                    </th>
+                    <th style="width: 50%">
+                        <mfDefaultSorter by="email">Email</mfDefaultSorter>
+                    </th>
+                    <th style="width: 10%">
+                        <mfDefaultSorter by="age">Age</mfDefaultSorter>
+                    </th>
+                    <th style="width: 20%">
+                        <mfDefaultSorter by="city">City</mfDefaultSorter>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="#item of mf.data">
+                    <td>{{item.name}}</td>
+                    <td>{{item.email}}</td>
+                    <td class="text-right">{{item.age}}</td>
+                    <td>{{item.city | uppercase}}</td>
+                </tr>
+                </tbody>
+                <tfoot>
                 <tr>
                     <td colspan="4">
-                        <mfDefaultPaginator [rowsOnPageSet]="[1,2,3,5,8,13,21,34]" [(rowsOnPage)]="rowsOnPage"
-                        [(activePage)]="activePage" #mbp></mfDefaultPaginator>
+                        <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]" [rowsOnPage]="5"></mfBootstrapPaginator>
                     </td>
                 </tr>
-            </tfoot>
-        </table>
-        <mfDefaultPaginator [rowsOnPageSet]="[1,2,3,5,8,13,21,34]" [mfTable]="mf"></mfDefaultPaginator>
-
-    </div>
-    <div class="col-xs-6 col-md-offset-3">
-
-        <table class="table table-striped" [mfTable]="data" #mf2="mfTable">
-            <thead>
-            <tr>
-                <th><mfSort by="name">Name</mfSort></th>
-                <th><a (click)="mf2.sort('score')">Score</a></th>
-                <th>Abec</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="#item of mf2.data">
-                <td>{{item.name}}</td>
-                <td>{{item.score}}</td>
-                <td>{{item.abec}}</td>
-            </tr>
-            </tbody>
-        </table>
-
+                </tfoot>
+            </table>
+        </div>
     </div>
 </div>
