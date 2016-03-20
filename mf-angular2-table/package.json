@@ -1,15 +1,15 @@
 {
-  "name": "mf-angular2-table",
+  "name": "angular2-datatable",
   "version": "0.0.1",
-  "description": "Table extension for angular2 apps.",
-  "main": "mf-angular2-table.js",
+  "description": "DataTable component for Angular2 framework",
+  "main": "datatable",
   "scripts": {
     "watch": "tsc -p src -w",
     "build": "rm -rf lib && tsc -p src"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jhades/angular2-library-seed.git"
+    "url": "git+https://github.com/mariuszfoltak/angular2-datatable.git"
   },
   "keywords": [
     "angular",
@@ -20,15 +20,14 @@
   "author": "mariuszfoltak@gmail.com",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jhades/angular2-library-seed/issues"
+    "url": "https://github.com/mariuszfoltak/angular2-datatable/issues"
   },
-  "homepage": "https://github.com/jhades/angular2-library-seed#readme",
+  "homepage": "https://github.com/mariuszfoltak/angular2-datatable#readme",
   "devDependencies": {
     "typescript": "^1.8.7"
   },
   "dependencies": {
     "angular2": "^2.0.0-beta.0",
-    "lodash": "^4.6.1",
-    "rxjs": "^5.0.0-beta.0"
+    "lodash": "^4.6.1"
   }
 }
