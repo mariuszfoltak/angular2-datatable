@@ -9,7 +9,7 @@ npm -i angular2-table
 ## Usage example
 
 app.ts
-```TypeScript
+```typescript
  import {Component} from 'angular2/core';
  import {DataTableDirectives} from 'angular2-datatable/datatable';
  
@@ -24,7 +24,7 @@ app.ts
 ```
 
 app.html
-```HTML
+```html
 <table class="table table-striped" [mfData]="data" #mf="mfDataTable">
     <thead>
     <tr>
