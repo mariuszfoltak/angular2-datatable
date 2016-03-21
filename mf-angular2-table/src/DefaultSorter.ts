@@ -4,7 +4,7 @@ import {DataTable, SortEvent} from "./DataTable";
 @Component({
     selector: "mfDefaultSorter",
     template: `
-        <a href="#" (click)="sort()" class="text-nowrap">
+        <a style="cursor: pointer" (click)="sort()" class="text-nowrap">
             <ng-content></ng-content>
             <span *ngIf="isSortedByMeAsc" class="glyphicon glyphicon-triangle-top" aria-hidden="true"></span>
             <span *ngIf="isSortedByMeDesc" class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>

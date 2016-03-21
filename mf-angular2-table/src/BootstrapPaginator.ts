@@ -9,42 +9,42 @@ import {Paginator} from "./Paginator";
                     [activePage]="activePage" (activePageChange)="changeActivePage($event)">
         <nav class="pagination" *ngIf="p.lastPage>1">
             <li [class.disabled]="activePage <= 1" (click)="activePage = 1">
-                <a>&laquo;</a>
+                <a style="cursor: pointer">&laquo;</a>
             </li>
             <li *ngIf="activePage > 4 && activePage + 1 > p.lastPage" (click)="activePage = activePage - 4">
-                <a>{{activePage-4}}</a>
+                <a style="cursor: pointer">{{activePage-4}}</a>
             </li>
             <li *ngIf="activePage > 3 && activePage + 2 > p.lastPage" (click)="activePage = activePage - 3">
-                <a>{{activePage-3}}</a>
+                <a style="cursor: pointer">{{activePage-3}}</a>
             </li>
             <li *ngIf="activePage > 2" (click)="activePage = activePage - 2">
-                <a>{{activePage-2}}</a>
+                <a style="cursor: pointer">{{activePage-2}}</a>
             </li>
             <li *ngIf="activePage > 1" (click)="activePage = activePage - 1">
-                <a>{{activePage-1}}</a>
+                <a style="cursor: pointer">{{activePage-1}}</a>
             </li>
             <li class="active">
-                <a>{{activePage}}</a>
+                <a style="cursor: pointer">{{activePage}}</a>
             </li>
             <li *ngIf="activePage + 1 <= p.lastPage" (click)="activePage = activePage + 1">
-                <a>{{activePage+1}}</a>
+                <a style="cursor: pointer">{{activePage+1}}</a>
             </li>
             <li *ngIf="activePage + 2 <= p.lastPage" (click)="activePage = activePage + 2">
-                <a>{{activePage+2}}</a>
+                <a style="cursor: pointer">{{activePage+2}}</a>
             </li>
             <li *ngIf="activePage + 3 <= p.lastPage && activePage < 3" (click)="activePage = activePage + 3">
-                <a>{{activePage+3}}</a>
+                <a style="cursor: pointer">{{activePage+3}}</a>
             </li>
             <li *ngIf="activePage + 4 <= p.lastPage && activePage < 2" (click)="activePage = activePage + 4">
-                <a>{{activePage+4}}</a>
+                <a style="cursor: pointer">{{activePage+4}}</a>
             </li>
             <li [class.disabled]="activePage >= p.lastPage" (click)="activePage = p.lastPage">
-                <a>&raquo;</a>
+                <a style="cursor: pointer">&raquo;</a>
             </li>
         </nav>
         <nav class="pagination pull-right">
             <li *ngFor="#rows of rowsOnPageSet" [class.active]="rowsOnPage===rows" (click)="changeRowsOnPage(rows)">
-                <a>{{rows}}</a>
+                <a style="cursor: pointer">{{rows}}</a>
             </li>
         </nav>
     </mfPaginator>
