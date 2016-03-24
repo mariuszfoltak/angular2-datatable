@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <base href="/">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="assets/ext-libs/bootstrap/css/bootstrap.min.css">
+</head>
+
+<body>
+    <app></app>
+
+<script src="jspm_packages/system.js"></script>
+<script src="config.js"></script>
+<script>
+    CONFIG = {
+        apiEndpoint: "http://localhost:7005/[app]/resources/",
+        prodMode: false
+    };
+    System.import('app/main');
+</script>
+</body>
+
+</html>
+

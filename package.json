@@ -1,0 +1,46 @@
+{
+  "name": "app",
+  "version": "1.0.0",
+  "scripts": {
+    "jspm": "jspm",
+    "postinstall": "npm run typings install && npm run jspm install",
+    "lite": "lite-server",
+    "unbundle": "npm run jspm unbundle",
+    "bundleDev": "npm run jspm bundle app/main.ts - [app/**/*] build/bundle.js --inject --minify --no-mangle",
+    "bundleProd": "npm run jspm bundle-sfx app/main.ts build/bundle.sfx.js --skip-source-maps --minify --no-mangle",
+    "typings": "typings"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "angular2": "2.0.0-beta.11",
+    "bootstrap": "3.3.6",
+    "json.date-extensions": "1.2.2",
+    "lodash": "4.0.0",
+    "ng2-bootstrap": "1.0.1-beta.2",
+    "reflect-metadata": "0.1.2",
+    "rxjs": "5.0.0-beta.2",
+    "zone.js": "0.6.4"
+  },
+  "devDependencies": {
+    "jspm": "^0.16.31",
+    "lite-server": "2.0.1",
+    "typings": "^0.6.8"
+  },
+  "jspm": {
+    "dependencies": {
+      "angular2": "npm:angular2@2.0.0-beta.9",
+      "bootstrap": "npm:bootstrap@3.3.6",
+      "json.date-extensions": "npm:json.date-extensions@1.2.2",
+      "lodash": "npm:lodash@4.0.0",
+      "ng2-bootstrap": "npm:ng2-bootstrap@1.0.1-beta.2",
+      "reflect-metadata": "npm:reflect-metadata@0.1.2",
+      "rxjs": "npm:rxjs@5.0.0-beta.2",
+      "zone.js": "npm:zone.js@0.6.4"
+    },
+    "devDependencies": {
+      "text": "github:systemjs/plugin-text@^0.0.7",
+      "ts": "github:frankwallis/plugin-typescript@^4.0.2",
+      "typescript": "npm:typescript@^1.6.2"
+    }
+  }
+}
