@@ -5,7 +5,8 @@
   "scripts": {
     "watch": "rm -rf build && mkdir build && tsc -w",
     "build": "rm -rf build && mkdir build && tsc || true",
-    "start": "lite-server"
+    "start": "lite-server",
+    "tsc" : "tsc"
   },
   "author": "",
   "license": "ISC",
