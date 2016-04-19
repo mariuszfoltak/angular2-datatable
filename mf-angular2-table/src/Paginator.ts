@@ -12,7 +12,7 @@ export class Paginator implements OnInit, OnChanges {
     private _activePage:number;
     private _rowsOnPage:number;
 
-    public dataLength:number;
+    public dataLength:number = 0;
     public lastPage:number;
 
     @Input("mfTable") private inputMfTable:DataTable;
@@ -42,7 +42,8 @@ export class Paginator implements OnInit, OnChanges {
 
     public ngOnInit() {
         let page = this.mfTable.getPage();
-        this.onPageChangeSubscriber(page);
+        this.dataLength = page.dataLength;
+        this.lastPage = Math.ceil(page.dataLength / this._rowsOnPage);
         this.mfTable.onDataChange.subscribe(this.onDataChangeSubscriber);
         this.mfTable.onPageChange.subscribe(this.onPageChangeSubscriber);
     }

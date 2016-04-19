@@ -1,6 +1,6 @@
 {
   "name": "angular2-datatable",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "DataTable component for Angular2 framework",
   "main": "datatable",
   "scripts": {
@@ -12,12 +12,10 @@
     "url": "git+https://github.com/mariuszfoltak/angular2-datatable.git"
   },
   "keywords": [
-    "angular",
-    "angularjs",
-    "angular2",
-    "ng",
-    "ng2",
-    "table"
+    "angular", "angularjs", "angular2", "ng", "ng2",
+    "table",
+    "pagination",
+    "sort", "sorting"
   ],
   "author": "mariuszfoltak@gmail.com",
   "license": "MIT",
