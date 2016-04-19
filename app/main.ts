@@ -1,5 +1,5 @@
-import 'zone.js';
 import 'reflect-metadata';
+import 'zone.js';
 import 'json.date-extensions';
 import 'rxjs/Rx';
 

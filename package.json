@@ -13,9 +13,9 @@
   "license": "ISC",
   "dependencies": {
     "angular2": "2.0.0-beta.11",
+    "angular2-datatable": "^0.2.3",
     "bootstrap": "3.3.6",
     "json.date-extensions": "1.2.2",
-    "lodash": "4.0.0",
     "ng2-bootstrap": "1.0.1-beta.2",
     "reflect-metadata": "0.1.2",
     "rxjs": "5.0.0-beta.2",
@@ -23,18 +23,20 @@
   },
   "devDependencies": {
     "jspm": "^0.16.31",
-    "lite-server": "2.0.1",
+    "lite-server": "^2.0.1",
     "typings": "^0.6.8"
   },
   "jspm": {
     "dependencies": {
-      "angular2": "npm:angular2@2.0.0-beta.9",
+      "angular2": "npm:angular2@^2.0.0-beta.9",
+      "angular2-datatable": "npm:angular2-datatable@^0.2.3",
       "bootstrap": "npm:bootstrap@3.3.6",
+      "highlight.js": "npm:highlight.js@^9.3.0",
+      "json": "github:systemjs/plugin-json@^0.1.0",
       "json.date-extensions": "npm:json.date-extensions@1.2.2",
-      "lodash": "npm:lodash@4.0.0",
       "ng2-bootstrap": "npm:ng2-bootstrap@1.0.1-beta.2",
       "reflect-metadata": "npm:reflect-metadata@0.1.2",
-      "rxjs": "npm:rxjs@5.0.0-beta.2",
+      "rxjs": "npm:rxjs@^5.0.0-beta.2",
       "zone.js": "npm:zone.js@0.6.4"
     },
     "devDependencies": {

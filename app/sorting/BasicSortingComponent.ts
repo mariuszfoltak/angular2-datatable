@@ -4,6 +4,6 @@ import {Component} from "angular2/core";
     selector: 'page1',
     template: `<h1>Pierwsza strona</h1>`
 })
-export class Page1Component {
+export class BasicSortingComponent {
 
 }

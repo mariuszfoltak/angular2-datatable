@@ -1,0 +1,102 @@
+<h2>Basic example of usage sortable table with pagination in Angular2</h2>
+
+<div class="panel panel-default">
+    <div class="panel-heading">Cities population and areas</div>
+
+    <table class="table table-striped" [mfData]="data" #mf="mfDataTable">
+        <thead>
+        <tr>
+            <th style="width: 20%">
+                <mfDefaultSorter by="country">Country</mfDefaultSorter>
+            </th>
+            <th style="width: 50%">
+                <mfDefaultSorter by="city">City</mfDefaultSorter>
+            </th>
+            <th style="width: 10%">
+                <mfDefaultSorter by="area">Area</mfDefaultSorter>
+            </th>
+            <th style="width: 20%">
+                <mfDefaultSorter by="population">Population</mfDefaultSorter>
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="#item of mf.data">
+            <td>{{item.country | uppercase}}</td>
+            <td>{{item.city}}</td>
+            <td class="text-right">{{item.area}}</td>
+            <td class="text-right">{{item.population}}</td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+            <td colspan="4">
+                <mfBootstrapPaginator [activePage]="5" [rowsOnPageSet]="[5,10,25]" [rowsOnPage]="5"></mfBootstrapPaginator>
+            </td>
+        </tr>
+        </tfoot>
+    </table>
+</div>
+
+<div ngNonBindable class="panel panel-default">
+    <div class="panel-heading">Typescript</div>
+    <!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #008800; font-weight: bold">import</span> {Component} from <span style="background-color: #fff0f0">&quot;angular2/core&quot;</span>;
+<span style="color: #008800; font-weight: bold">import</span> {DataTableDirectives} from <span style="background-color: #fff0f0">&quot;angular2-datatable/datatable&quot;</span>;
+
+<span style="color: #FF0000; background-color: #FFAAAA">@</span>Component({
+    templateUrl<span style="color: #333333">:</span> <span style="background-color: #fff0f0">&quot;./BasicExampleComponent.html&quot;</span>,
+    directives<span style="color: #333333">:</span> [DataTableDirectives]
+})
+<span style="color: #008800; font-weight: bold">export</span> <span style="color: #008800; font-weight: bold">class</span> BasicExampleComponent {
+    <span style="color: #008800; font-weight: bold">private</span> data: <span style="color: #333399; font-weight: bold">any</span>[] <span style="color: #333333">=</span> [
+        {<span style="background-color: #fff0f0">&quot;country&quot;</span><span style="color: #333333">:</span><span style="background-color: #fff0f0">&quot;Poland&quot;</span>,<span style="background-color: #fff0f0">&quot;city&quot;</span><span style="color: #333333">:</span><span style="background-color: #fff0f0">&quot;Bodzanów&quot;</span>,<span style="background-color: #fff0f0">&quot;area&quot;</span><span style="color: #333333">:</span><span style="color: #0000DD; font-weight: bold">643</span>,<span style="background-color: #fff0f0">&quot;population&quot;</span><span style="color: #333333">:</span><span style="color: #0000DD; font-weight: bold">502</span>},
+        {<span style="background-color: #fff0f0">&quot;country&quot;</span><span style="color: #333333">:</span><span style="background-color: #fff0f0">&quot;Colombia&quot;</span>,<span style="background-color: #fff0f0">&quot;city&quot;</span><span style="color: #333333">:</span><span style="background-color: #fff0f0">&quot;Mosquera&quot;</span>,<span style="background-color: #fff0f0">&quot;area&quot;</span><span style="color: #333333">:</span><span style="color: #0000DD; font-weight: bold">720</span>,<span style="background-color: #fff0f0">&quot;population&quot;</span><span style="color: #333333">:</span><span style="color: #0000DD; font-weight: bold">761</span>},
+        {<span style="background-color: #fff0f0">&quot;country&quot;</span><span style="color: #333333">:</span><span style="background-color: #fff0f0">&quot;Mexico&quot;</span>,<span style="background-color: #fff0f0">&quot;city&quot;</span><span style="color: #333333">:</span><span style="background-color: #fff0f0">&quot;Vista Hermosa&quot;</span>,<span style="background-color: #fff0f0">&quot;area&quot;</span><span style="color: #333333">:</span><span style="color: #0000DD; font-weight: bold">635</span>,<span style="background-color: #fff0f0">&quot;population&quot;</span><span style="color: #333333">:</span><span style="color: #0000DD; font-weight: bold">253</span>},
+        ...
+        ];
+}
+</pre></div>
+
+</div>
+
+<div ngNonBindable class="panel panel-default">
+    <div class="panel-heading">HTML</div>
+    <!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #007700">&lt;div</span> <span style="color: #0000CC">class=</span><span style="background-color: #fff0f0">&quot;panel panel-default&quot;</span><span style="color: #007700">&gt;</span>
+    <span style="color: #007700">&lt;div</span> <span style="color: #0000CC">class=</span><span style="background-color: #fff0f0">&quot;panel-heading&quot;</span><span style="color: #007700">&gt;</span>Cities population and areas<span style="color: #007700">&lt;/div&gt;</span>
+
+    <span style="color: #007700">&lt;table</span> <span style="color: #0000CC">class=</span><span style="background-color: #fff0f0">&quot;table table-striped&quot;</span> <span style="color: #FF0000; background-color: #FFAAAA">[</span><span style="color: #0000CC">mfData</span><span style="color: #FF0000; background-color: #FFAAAA">]=&quot;</span><span style="color: #0000CC">data</span><span style="color: #FF0000; background-color: #FFAAAA">&quot;</span> <span style="color: #FF0000; background-color: #FFAAAA">#</span><span style="color: #0000CC">mf=</span><span style="background-color: #fff0f0">&quot;mfDataTable&quot;</span><span style="color: #007700">&gt;</span>
+        <span style="color: #007700">&lt;thead&gt;</span>
+        <span style="color: #007700">&lt;tr&gt;</span>
+            <span style="color: #007700">&lt;th</span> <span style="color: #0000CC">style=</span><span style="background-color: #fff0f0">&quot;width: 20%&quot;</span><span style="color: #007700">&gt;</span>
+                <span style="color: #007700">&lt;mfDefaultSorter</span> <span style="color: #0000CC">by=</span><span style="background-color: #fff0f0">&quot;country&quot;</span><span style="color: #007700">&gt;</span>Country<span style="color: #007700">&lt;/mfDefaultSorter&gt;</span>
+            <span style="color: #007700">&lt;/th&gt;</span>
+            <span style="color: #007700">&lt;th</span> <span style="color: #0000CC">style=</span><span style="background-color: #fff0f0">&quot;width: 50%&quot;</span><span style="color: #007700">&gt;</span>
+                <span style="color: #007700">&lt;mfDefaultSorter</span> <span style="color: #0000CC">by=</span><span style="background-color: #fff0f0">&quot;city&quot;</span><span style="color: #007700">&gt;</span>City<span style="color: #007700">&lt;/mfDefaultSorter&gt;</span>
+            <span style="color: #007700">&lt;/th&gt;</span>
+            <span style="color: #007700">&lt;th</span> <span style="color: #0000CC">style=</span><span style="background-color: #fff0f0">&quot;width: 10%&quot;</span><span style="color: #007700">&gt;</span>
+                <span style="color: #007700">&lt;mfDefaultSorter</span> <span style="color: #0000CC">by=</span><span style="background-color: #fff0f0">&quot;area&quot;</span><span style="color: #007700">&gt;</span>Area<span style="color: #007700">&lt;/mfDefaultSorter&gt;</span>
+            <span style="color: #007700">&lt;/th&gt;</span>
+            <span style="color: #007700">&lt;th</span> <span style="color: #0000CC">style=</span><span style="background-color: #fff0f0">&quot;width: 20%&quot;</span><span style="color: #007700">&gt;</span>
+                <span style="color: #007700">&lt;mfDefaultSorter</span> <span style="color: #0000CC">by=</span><span style="background-color: #fff0f0">&quot;population&quot;</span><span style="color: #007700">&gt;</span>Population<span style="color: #007700">&lt;/mfDefaultSorter&gt;</span>
+            <span style="color: #007700">&lt;/th&gt;</span>
+        <span style="color: #007700">&lt;/tr&gt;</span>
+        <span style="color: #007700">&lt;/thead&gt;</span>
+        <span style="color: #007700">&lt;tbody&gt;</span>
+        <span style="color: #007700">&lt;tr</span> <span style="color: #FF0000; background-color: #FFAAAA">*</span><span style="color: #0000CC">ngFor=</span><span style="background-color: #fff0f0">&quot;#item of mf.data&quot;</span><span style="color: #007700">&gt;</span>
+            <span style="color: #007700">&lt;td&gt;</span>{{item.country | uppercase}}<span style="color: #007700">&lt;/td&gt;</span>
+            <span style="color: #007700">&lt;td&gt;</span>{{item.city}}<span style="color: #007700">&lt;/td&gt;</span>
+            <span style="color: #007700">&lt;td</span> <span style="color: #0000CC">class=</span><span style="background-color: #fff0f0">&quot;text-right&quot;</span><span style="color: #007700">&gt;</span>{{item.area}}<span style="color: #007700">&lt;/td&gt;</span>
+            <span style="color: #007700">&lt;td</span> <span style="color: #0000CC">class=</span><span style="background-color: #fff0f0">&quot;text-right&quot;</span><span style="color: #007700">&gt;</span>{{item.population}}<span style="color: #007700">&lt;/td&gt;</span>
+        <span style="color: #007700">&lt;/tr&gt;</span>
+        <span style="color: #007700">&lt;/tbody&gt;</span>
+        <span style="color: #007700">&lt;tfoot&gt;</span>
+        <span style="color: #007700">&lt;tr&gt;</span>
+            <span style="color: #007700">&lt;td</span> <span style="color: #0000CC">colspan=</span><span style="background-color: #fff0f0">&quot;4&quot;</span><span style="color: #007700">&gt;</span>
+                <span style="color: #007700">&lt;mfBootstrapPaginator</span> <span style="color: #FF0000; background-color: #FFAAAA">[</span><span style="color: #0000CC">activePage</span><span style="color: #FF0000; background-color: #FFAAAA">]=&quot;</span><span style="color: #0000CC">5</span><span style="color: #FF0000; background-color: #FFAAAA">&quot;</span> <span style="color: #FF0000; background-color: #FFAAAA">[</span><span style="color: #0000CC">rowsOnPageSet</span><span style="color: #FF0000; background-color: #FFAAAA">]=&quot;[</span><span style="color: #0000CC">5</span><span style="color: #FF0000; background-color: #FFAAAA">,</span><span style="color: #0000CC">10</span><span style="color: #FF0000; background-color: #FFAAAA">,</span><span style="color: #0000CC">25</span><span style="color: #FF0000; background-color: #FFAAAA">]&quot;</span> <span style="color: #FF0000; background-color: #FFAAAA">[</span><span style="color: #0000CC">rowsOnPage</span><span style="color: #FF0000; background-color: #FFAAAA">]=&quot;</span><span style="color: #0000CC">5</span><span style="color: #FF0000; background-color: #FFAAAA">&quot;</span><span style="color: #007700">&gt;&lt;/mfBootstrapPaginator&gt;</span>
+            <span style="color: #007700">&lt;/td&gt;</span>
+        <span style="color: #007700">&lt;/tr&gt;</span>
+        <span style="color: #007700">&lt;/tfoot&gt;</span>
+    <span style="color: #007700">&lt;/table&gt;</span>
+<span style="color: #007700">&lt;/div&gt;</span>
+</pre></div>
+</div>

@@ -4,4 +4,6 @@ jspm_packages
 .idea
 lib
 build
+typings/
 
+*.iml

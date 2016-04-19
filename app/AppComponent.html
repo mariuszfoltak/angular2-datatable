@@ -1,16 +1,25 @@
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand">Oracle Angular2 Seed</a>
+            <a [routerLink]="['BasicExample']" class="navbar-brand">Angular2 DataTable</a>
         </div>
 
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a [routerLink]="['PageOne']">Page 1</a></li>
-                <li><a [routerLink]="['PageTwo']">Page 2</a></li>
+                <!--<li class="dropdown" dropdown>-->
+                    <!--<a class="dropdown-toggle navbar-link" dropdownToggle>Sorting <span class="caret"></span></a>-->
+                    <!--<ul class="dropdown-menu">-->
+                        <!--<li><a href="#">Simple sorting</a></li>-->
+                        <!--<li role="separator" class="divider"></li>-->
+                        <!--<li><a href="#">Advanced</a></li>-->
+                    <!--</ul>-->
+                <!--</li>-->
+                <!--<li><a [routerLink]="['SortingBasic']">Sorting</a></li>-->
             </ul>
         </div>
     </div>
 </nav>
 
-<router-outlet></router-outlet>
+<div class="col-xs-8 col-xs-offset-2">
+    <router-outlet></router-outlet>
+</div>

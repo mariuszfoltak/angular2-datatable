@@ -1,19 +1,21 @@
 import {Component, provide} from 'angular2/core';
 import {RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS} from 'angular2/router';
 import {HTTP_PROVIDERS, BrowserXhr} from 'angular2/http';
+import {DROPDOWN_DIRECTIVES} from "ng2-bootstrap/ng2-bootstrap";
 
 import {ApiService} from "./common/api/ApiService";
 import {CORSBrowserXHR} from "./common/hack/CORSBrowserXHR";
 
-import {Page1Component} from "./page1/Page1Component";
+import {BasicSortingComponent} from "./sorting/BasicSortingComponent";
 import {Page2Component} from "./page2/Page2Component";
 
 import template from './AppComponent.html!text';
+import {BasicExampleComponent} from "./basic/BasicExampleComponent";
 
 @Component({
     selector: 'app',
     template: template,
-    directives: [ROUTER_DIRECTIVES],
+    directives: [ROUTER_DIRECTIVES, DROPDOWN_DIRECTIVES],
     providers: [
         HTTP_PROVIDERS,
         ROUTER_PROVIDERS,
@@ -23,9 +25,8 @@ import template from './AppComponent.html!text';
 })
 
 @RouteConfig([
-    {path: '/page1', component: Page1Component, name: 'PageOne'},
-    {path: '/page2', component: Page2Component, name: 'PageTwo'},
-    {path: '/**', redirectTo: ['PageOne']}
+    {path: '/basic', component: BasicExampleComponent, name: 'BasicExample'},
+    {path: '/**', redirectTo: ['BasicExample']}
 ])
 export class AppComponent { }
 
