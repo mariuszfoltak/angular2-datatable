@@ -1,4 +1,5 @@
 import {Directive, Input, EventEmitter, SimpleChange, OnChanges, DoCheck} from "angular2/core";
+import * as _ from "lodash";
 
 export interface SortEvent {
     sortBy: string;

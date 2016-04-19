@@ -7,12 +7,10 @@
     <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap-theme.min.css">
 
-    <script src="/node_modules/angular2/bundles/angular2-polyfills.js"></script>
     <script src="/node_modules/es6-shim/es6-shim.min.js"></script>
+    <script src="/node_modules/angular2/bundles/angular2-polyfills.js"></script>
     <script src="/node_modules/systemjs/dist/system.src.js"></script>
     <script src="/node_modules/angular2/bundles/http.min.js"></script>
-
-    <script src="node_modules/lodash/lodash.min.js"></script>
 
     <script>
         System.config({
@@ -21,7 +19,8 @@
                 "/angular2": {"defaultExtension": false}
             },
             map: {
-                'angular2-datatable': 'node_modules/angular2-datatable'
+                'angular2-datatable': 'node_modules/angular2-datatable',
+                'lodash': 'node_modules/lodash/lodash.js'
             }
         });
     </script>

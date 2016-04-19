@@ -27,6 +27,10 @@ export class App {
         return +num;
     }
 
+    private sortByWordLength = (a: any) => {
+        return a.name.length;
+    }
+
 }
 
 bootstrap(App);
