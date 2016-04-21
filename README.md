@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-npm -i angular2-table
+npm -i angular2-datatable
 ```
 
 ## Usage example
@@ -12,7 +12,7 @@ app.ts
 ```typescript
  import {Component} from 'angular2/core';
  import {DataTableDirectives} from 'angular2-datatable/datatable';
- 
+
  @Component({
      selector: 'app',
      templateUrl: 'app.html',
