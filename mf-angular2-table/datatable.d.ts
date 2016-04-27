@@ -3,4 +3,4 @@ export {DefaultSorter} from './lib/DefaultSorter';
 export {Paginator} from './lib/Paginator';
 export {BootstrapPaginator} from './lib/BootstrapPaginator';
 
-export const DataTableDirectives;
+export const DataTableDirectives: any[];
