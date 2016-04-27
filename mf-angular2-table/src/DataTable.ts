@@ -27,8 +27,8 @@ export class DataTable implements OnChanges, DoCheck {
     private sortBy = "";
     private sortOrder = "asc";
 
-    private rowsOnPage = 1000;
-    private activePage = 1;
+    @Input("mfRowsOnPage") private rowsOnPage = 1000;
+    @Input("mfActivePage") private activePage = 1;
 
     private mustRecalculateData = false;
 
@@ -57,16 +57,26 @@ export class DataTable implements OnChanges, DoCheck {
 
     public setPage(activePage:number, rowsOnPage:number):void {
         if (this.rowsOnPage !== rowsOnPage || this.activePage !== activePage) {
+            this.activePage = this.activePage !== activePage ? activePage : this.calculateNewActivePage(this.rowsOnPage, rowsOnPage);
             this.rowsOnPage = rowsOnPage;
-            this.activePage = activePage;
             this.mustRecalculateData = true;
             this.onPageChange.emit({activePage: this.activePage, rowsOnPage: this.rowsOnPage, dataLength: this.inputData.length});
         }
     }
 
+    private calculateNewActivePage(previousRowsOnPage:number, currentRowsOnPage:number):number {
+        let firstRowOnPage = (this.activePage - 1) * previousRowsOnPage + 1;
+        let newActivePage = Math.ceil(firstRowOnPage / currentRowsOnPage);
+        return newActivePage;
+    }
+
     public ngOnChanges(changes:{[key:string]:SimpleChange}):any {
         if (changes["inputData"]) {
-            this.onDataChange.emit({length: changes["inputData"].currentValue.length});
+            this.onPageChange.emit({
+                activePage: this.activePage,
+                rowsOnPage: this.rowsOnPage,
+                dataLength: this.inputData.length
+            });
             this.mustRecalculateData = true;
         }
     }
