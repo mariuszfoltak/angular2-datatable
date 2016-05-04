@@ -5,17 +5,28 @@
   "main": "datatable",
   "scripts": {
     "watch": "tsc -p src -w",
-    "build": "rm -rf lib && tsc -p src"
+    "build": "rm -rf lib && tsc -p src",
+    "start": "http-server -c-1 -o -p 8875 .",
+    "pretest": "npm run build",
+    "test": "karma start karma.conf.js",
+    "posttest": "node_modules/.bin/remap-istanbul -i coverage/coverage-final.json -o coverage -t html",
+    "coverage-remap": "remap-istanbul -i coverage/coverage-final.json -o coverage/coverage-remapped.lcov -t lcovonly",
+    "coverage": "http-server -c-1 -o -p 9875 ./coverage"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mariuszfoltak/angular2-datatable.git"
   },
   "keywords": [
-    "angular", "angularjs", "angular2", "ng", "ng2",
+    "angular",
+    "angularjs",
+    "angular2",
+    "ng",
+    "ng2",
     "table",
     "pagination",
-    "sort", "sorting"
+    "sort",
+    "sorting"
   ],
   "author": "mariuszfoltak@gmail.com",
   "license": "MIT",
@@ -24,7 +35,16 @@
   },
   "homepage": "https://github.com/mariuszfoltak/angular2-datatable#readme",
   "devDependencies": {
-    "typescript": "^1.8.7"
+    "http-server": "^0.9.0",
+    "jasmine-core": "^2.4.1",
+    "karma": "^0.13.22",
+    "karma-chrome-launcher": "^1.0.1",
+    "karma-coverage": "^0.5.5",
+    "karma-jasmine": "^0.3.8",
+    "remap-istanbul": "^0.6.3",
+    "systemjs": "^0.19.27",
+    "typescript": "^1.8.10",
+    "typings": "^0.8.1"
   },
   "dependencies": {
     "angular2": "^2.0.0-beta.0",

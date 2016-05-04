@@ -22,13 +22,13 @@ export interface DataEvent {
 })
 export class DataTable implements OnChanges, DoCheck {
 
-    @Input("mfData") private inputData:any[] = [];
+    @Input("mfData") public inputData:any[] = [];
 
     private sortBy = "";
     private sortOrder = "asc";
 
-    @Input("mfRowsOnPage") private rowsOnPage = 1000;
-    @Input("mfActivePage") private activePage = 1;
+    @Input("mfRowsOnPage") public rowsOnPage = 1000;
+    @Input("mfActivePage") public activePage = 1;
 
     private mustRecalculateData = false;
 
@@ -89,8 +89,8 @@ export class DataTable implements OnChanges, DoCheck {
     }
 
     private fillData():void {
-        this.activePage = this.activePage || 1;
-        this.rowsOnPage = this.rowsOnPage || 1000;
+        this.activePage = this.activePage;
+        this.rowsOnPage = this.rowsOnPage;
 
         let offset = (this.activePage - 1) * this.rowsOnPage;
         let data = this.inputData;
