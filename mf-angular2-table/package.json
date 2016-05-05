@@ -4,9 +4,10 @@
   "description": "DataTable component for Angular2 framework",
   "main": "datatable",
   "scripts": {
+    "postinstall": "typings install",
     "watch": "tsc -p src -w",
-    "prebuild": "typings install",
-    "build": "rm -rf lib && tsc -p src",
+    "prebuild": "rm -rf lib",
+    "build": "tsc -p src",
     "start": "http-server -c-1 -o -p 8875 .",
     "pretest": "npm run build",
     "test": "karma start karma.conf.js",
@@ -49,6 +50,7 @@
   },
   "dependencies": {
     "angular2": "^2.0.0-beta.0",
-    "lodash": "^4.0.0"
+    "lodash": "^4.0.0",
+    "rxjs": "^5.0.0-beta.6"
   }
 }
