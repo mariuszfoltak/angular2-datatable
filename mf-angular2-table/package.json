@@ -5,6 +5,7 @@
   "main": "datatable",
   "scripts": {
     "watch": "tsc -p src -w",
+    "prebuild": "typings install",
     "build": "rm -rf lib && tsc -p src",
     "start": "http-server -c-1 -o -p 8875 .",
     "pretest": "npm run build",
