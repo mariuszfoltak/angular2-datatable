@@ -9,5 +9,9 @@
     "sourceMap": true,
     "outDir": "../lib",
     "declaration": true
-  }
+  },
+  "exclude": [
+    "typings/main.d.ts",
+    "typings/main"
+  ]
 }

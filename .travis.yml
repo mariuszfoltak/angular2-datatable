@@ -2,7 +2,6 @@ language: node_js
 node_js:
   - "5"
 before_install:
- - cd mf-angular2-table
  - npm install -g codeclimate-test-reporter
 script: npm test -- --browsers PhantomJS
 after_script:

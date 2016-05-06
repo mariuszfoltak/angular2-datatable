@@ -1,4 +1,4 @@
-/// <reference path="../typings/main/ambient/jasmine/index.d.ts" />
+/// <reference path="./typings/browser/ambient/jasmine/index.d.ts" />
 import {describe, it, expect, beforeEach} from "angular2/testing";
 import {DataTable} from "./DataTable";
 import {SimpleChange} from "angular2/core";
