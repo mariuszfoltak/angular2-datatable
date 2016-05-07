@@ -1,9 +1,7 @@
 npm-debug.log
 node_modules
-jspm_packages
 .idea
 *.iml
 /lib
-/build
-/typings/
+/src/typings/
 /coverage/
