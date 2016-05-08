@@ -1,13 +1,19 @@
 language: node_js
 node_js:
-  - "5"
+- '5'
 before_install:
- - npm install -g codeclimate-test-reporter
+- npm install -g codeclimate-test-reporter
 script: npm test -- --browsers PhantomJS
 after_script:
-  - npm run coverage-remap
-  - codeclimate-test-reporter < coverage/coverage-remapped.lcov
+- npm run coverage-remap
+- codeclimate-test-reporter < coverage/coverage-remapped.lcov
 addons:
   code_climate:
     repo_token:
-      secure: "PEdCMJnYBzMaFLKGk9cz0C2tisqDP4idKnzOgfVhQxcTziUsvYWjuJF0UHHkpMrdhF/2YLe3ak4NsnzWzwllJdj/2JN33jkDcRJNKLwFSGf5Rq+kER/ch80Ycb6UHb9tNfeA4vYdM64LhHZhxZrajiqei+kHKImuGWYgon803TuAjnpVQYxXGf7n5MzU3o8j8CFtJXP5wmSg3u55ttgHo7HGq2T/ugUOAxVfy41RRw1VDL1fptCjVo9ZAkwv1KGK1ZQ0jRrmaL+OCKVu1lE49qXTcJ8kuec8sp/1WxE2DwUZVtFa4vX/1ErgpsD9YkmZ1G0Mx4qPEmObvR14vvdOcwXOm6z23+0t6pgy2o+xH1fHOyvYbR5/5VynXC0E+UdL4qpHk00lf86DSMchbl3aBq9OjG2ax0WAaA0dLg71bGDgfAWPJ0z1E+hvQom3JbwLaxvKK0M9/WaraaIRiWkaQSFsMJ4j5BdtGZfsEKwsaZi6cYD8ubR2h4/zYMB97thCT3Vp/7G0KBcLHQOks2n9UskRPwlWFYWAG8VvCRxL7T6yo/RsmndIKNrl3KnsUmLYe1xHehiRzsvjK1U3sUYKo3TbITuKzJx16rxvXVrOZNPQljUr9gB522uRBNzLFbl5Z5bXp/VAjrbuE+prqVM+JtEU+PR0iLH23J/7/5XMEzU="
+      secure: PEdCMJnYBzMaFLKGk9cz0C2tisqDP4idKnzOgfVhQxcTziUsvYWjuJF0UHHkpMrdhF/2YLe3ak4NsnzWzwllJdj/2JN33jkDcRJNKLwFSGf5Rq+kER/ch80Ycb6UHb9tNfeA4vYdM64LhHZhxZrajiqei+kHKImuGWYgon803TuAjnpVQYxXGf7n5MzU3o8j8CFtJXP5wmSg3u55ttgHo7HGq2T/ugUOAxVfy41RRw1VDL1fptCjVo9ZAkwv1KGK1ZQ0jRrmaL+OCKVu1lE49qXTcJ8kuec8sp/1WxE2DwUZVtFa4vX/1ErgpsD9YkmZ1G0Mx4qPEmObvR14vvdOcwXOm6z23+0t6pgy2o+xH1fHOyvYbR5/5VynXC0E+UdL4qpHk00lf86DSMchbl3aBq9OjG2ax0WAaA0dLg71bGDgfAWPJ0z1E+hvQom3JbwLaxvKK0M9/WaraaIRiWkaQSFsMJ4j5BdtGZfsEKwsaZi6cYD8ubR2h4/zYMB97thCT3Vp/7G0KBcLHQOks2n9UskRPwlWFYWAG8VvCRxL7T6yo/RsmndIKNrl3KnsUmLYe1xHehiRzsvjK1U3sUYKo3TbITuKzJx16rxvXVrOZNPQljUr9gB522uRBNzLFbl5Z5bXp/VAjrbuE+prqVM+JtEU+PR0iLH23J/7/5XMEzU=
+deploy:
+  provider: npm
+  on:
+    tags: true
+  api_key:
+    secure: WnmSbrluPQppXJ/2FygHrbvbdfowwrH+gxMmlfSzQWKh6wG4xmIeNT9BWriqeqL5xuIcJ5V8qzIhyyiDAYeUZ9MOoUfyNeVWs78Vda7b5OLwDHyBcJh9yVOD+0dC1R4sR94vdDfs4wRWL0U55LY9wHWSthyVQunBjAYekLtSnuwhQckNTZWmJSomEHisY7CEUkfd/5pYdLJI/TiOeQ7nlHO9Fj4zOA2yTVzj5LxFFJDaeQbm765RVthQvogLhA/O/eDBB562/xcEaFNgrtrB3OdPBTW/PbpXgUiNa0gR2gQyc/goJEdmtJG9UQ5BVRVp8/5x8IXAIj2dJ8BFBOQTVBobDIaBduEJU89EoUg29RyvhvygRoKyHz17yTCqW+PdBQbr5/TrOww/X8aZwmikHEQu6DPM7kdL0a/pBwqbUkodQpphCCPdy5scOdWHf21RDH+DqLISk1/jgt+ZGrrokDD9Aba4cAWbl/BoG4pVQD1V+RdPrAhsjGvtCihynANgzgGpORat/G7iJ/JzcADYX/jdrV+XNCHkGxUDXeR8Ef+qq3l5VORj4rM6Jn5A7odd8AoXPfvQJf7pSKS2RHyDg+OLJrqgE5ykCZgo+Qm3xhuFE/c3gO/5U0PQ5XKIs9LQhl3wjvY9Bw14sPoHQaBKMW84/Zy3nO0qSlkVmpHME7M=
