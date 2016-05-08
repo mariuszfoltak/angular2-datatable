@@ -20,6 +20,13 @@ describe("DataTable directive tests", ()=> {
 
     describe("initializing", ()=> {
 
+        it("data should be empty array if inputData is undefined or null", () => {
+            let datatable = new DataTable();
+            datatable.ngOnChanges({inputData: new SimpleChange(null, null)});
+            datatable.ngDoCheck();
+            expect(datatable.data).toEqual([]);
+        });
+
         it("data should be equal to inputData", ()=> {
             datatable.ngDoCheck();
             expect(datatable.data).toEqual(datatable.inputData);

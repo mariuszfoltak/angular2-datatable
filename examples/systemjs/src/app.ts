@@ -14,12 +14,14 @@ import {DataTableDirectives} from 'angular2-datatable/datatable';
 })
 export class App {
 
-    private data = [];
+    private data;
 
-    constructor(private http: Http) {
+    constructor(private http:Http) {
         http.get("/src/data.json")
-            .subscribe((data)=>{
-                this.data = data.json();
+            .subscribe((data)=> {
+                setTimeout(()=> {
+                    this.data = data.json();
+                }, 5000);
             });
     }
 
@@ -27,7 +29,7 @@ export class App {
         return +num;
     }
 
-    private sortByWordLength = (a: any) => {
+    private sortByWordLength = (a:any) => {
         return a.name.length;
     }
 
