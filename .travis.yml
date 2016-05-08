@@ -13,6 +13,7 @@ addons:
       secure: PEdCMJnYBzMaFLKGk9cz0C2tisqDP4idKnzOgfVhQxcTziUsvYWjuJF0UHHkpMrdhF/2YLe3ak4NsnzWzwllJdj/2JN33jkDcRJNKLwFSGf5Rq+kER/ch80Ycb6UHb9tNfeA4vYdM64LhHZhxZrajiqei+kHKImuGWYgon803TuAjnpVQYxXGf7n5MzU3o8j8CFtJXP5wmSg3u55ttgHo7HGq2T/ugUOAxVfy41RRw1VDL1fptCjVo9ZAkwv1KGK1ZQ0jRrmaL+OCKVu1lE49qXTcJ8kuec8sp/1WxE2DwUZVtFa4vX/1ErgpsD9YkmZ1G0Mx4qPEmObvR14vvdOcwXOm6z23+0t6pgy2o+xH1fHOyvYbR5/5VynXC0E+UdL4qpHk00lf86DSMchbl3aBq9OjG2ax0WAaA0dLg71bGDgfAWPJ0z1E+hvQom3JbwLaxvKK0M9/WaraaIRiWkaQSFsMJ4j5BdtGZfsEKwsaZi6cYD8ubR2h4/zYMB97thCT3Vp/7G0KBcLHQOks2n9UskRPwlWFYWAG8VvCRxL7T6yo/RsmndIKNrl3KnsUmLYe1xHehiRzsvjK1U3sUYKo3TbITuKzJx16rxvXVrOZNPQljUr9gB522uRBNzLFbl5Z5bXp/VAjrbuE+prqVM+JtEU+PR0iLH23J/7/5XMEzU=
 deploy:
   provider: npm
+  email: mariuszfoltak@gmail.com
   on:
     tags: true
   api_key:
