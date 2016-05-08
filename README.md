@@ -30,7 +30,7 @@ app.ts
 
 app.html
 ```html
-<table class="table table-striped" [mfData]="data" #mf="mfDataTable">
+<table class="table table-striped" [mfData]="data" #mf="mfDataTable" [mfRowsOnPage]="5">
     <thead>
     <tr>
         <th style="width: 20%">
@@ -58,7 +58,7 @@ app.html
     <tfoot>
     <tr>
         <td colspan="4">
-            <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]" [rowsOnPage]="5"></mfBootstrapPaginator>
+            <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
         </td>
     </tr>
     </tfoot>
