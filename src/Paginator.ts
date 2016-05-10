@@ -1,4 +1,4 @@
-import {Component, Input, SimpleChange, OnInit, OnChanges, Optional} from "angular2/core";
+import {Component, Input, SimpleChange, OnChanges, Optional} from "@angular/core";
 import {DataTable, PageEvent} from "./DataTable";
 
 @Component({

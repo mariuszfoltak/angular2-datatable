@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges} from "angular2/core";
+import {Component, Input, OnChanges} from "@angular/core";
 import {DataTable} from "./DataTable";
 import {Paginator} from "./Paginator";
 import * as _ from "lodash";

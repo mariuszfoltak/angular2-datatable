@@ -1,7 +1,7 @@
 /// <reference path="./typings/browser/ambient/jasmine/index.d.ts" />
-import {describe, it, expect, beforeEach} from "angular2/testing";
+import {describe, it, expect, beforeEach} from "@angular/core/testing";
+import {SimpleChange} from "@angular/core";
 import {DataTable} from "./DataTable";
-import {SimpleChange} from "angular2/core";
 
 describe("DataTable directive tests", ()=> {
     let datatable:DataTable;
