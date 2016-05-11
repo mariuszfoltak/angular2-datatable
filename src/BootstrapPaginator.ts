@@ -43,7 +43,7 @@ import * as _ from "lodash";
             </li>
         </nav>
         <nav class="pagination pull-right" *ngIf="p.dataLength > minRowsOnPage">
-            <li *ngFor="#rows of rowsOnPageSet" [class.active]="p.rowsOnPage===rows" (click)="p.setRowsOnPage(rows)">
+            <li *ngFor="let rows of rowsOnPageSet" [class.active]="p.rowsOnPage===rows" (click)="p.setRowsOnPage(rows)">
                 <a style="cursor: pointer">{{rows}}</a>
             </li>
         </nav>

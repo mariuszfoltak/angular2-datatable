@@ -13,14 +13,23 @@ System.config({
             defaultExtension: false,
             format: 'cjs',
             map: Object.keys(window.__karma__.files).filter(onlyAppFiles).reduce(createPathRecords, {})
+        },
+        '@angular/core': {
+            main: 'index.js',
+            defaultExtension: 'js'
+        },
+        '@angular/platform-browser': {
+            main: 'index.js',
+            defaultExtension: 'js'
         }
     },
     map: {
-        'lodash': '/base/node_modules/lodash/lodash.js'
+        'lodash': '/base/node_modules/lodash/lodash.js',
+        '@angular': 'base/node_modules/@angular'
     }
 });
 
-System.import('angular2/src/platform/browser/browser_adapter')
+System.import('@angular/platform-browser/src/browser/browser_adapter.js')
     .then(function(browser_adapter) { browser_adapter.BrowserDomAdapter.makeCurrent(); })
     .then(function() { return Promise.all(resolveTestFiles()); })
     .then(function() { __karma__.start(); }, function(error) { __karma__.error(error.stack || error); });

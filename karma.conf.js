@@ -7,17 +7,18 @@ module.exports = function(config) {
 
         files: [
             // paths loaded by Karma
+            'node_modules/traceur/bin/traceur-runtime.js',
             {pattern: 'node_modules/es6-shim/es6-shim.js', included: true, watched: true},
-            {pattern: 'node_modules/angular2/bundles/angular2-polyfills.js', included: true, watched: true},
+            {pattern: 'node_modules/zone.js/dist/zone.js', included: true, watched: true},
+            {pattern: 'node_modules/reflect-metadata/Reflect.js', included: true, watched: true},
             {pattern: 'node_modules/systemjs/dist/system.src.js', included: true, watched: true},
             {pattern: 'node_modules/rxjs/bundles/Rx.js', included: true, watched: true},
-            {pattern: 'node_modules/angular2/bundles/angular2.dev.js', included: true, watched: true},
-            {pattern: 'node_modules/angular2/bundles/testing.dev.js', included: true, watched: true},
-            {pattern: 'node_modules/angular2/bundles/http.dev.js', included: true, watched: true},
             {pattern: 'node_modules/lodash/lodash.js', included: true, watched: true},
             {pattern: 'karma-test-shim.js', included: true, watched: true},
+
             // paths loaded via module imports
             {pattern: 'lib/**/*.js', included: false, watched: true},
+            {pattern: 'node_modules/@angular/**/*.js', included: false, watched: true},
 
             // paths to support debugging with source maps in dev tools
             {pattern: 'src/**/*.ts', included: false, watched: false},
