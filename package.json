@@ -1,6 +1,6 @@
 {
   "name": "angular2-datatable",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "DataTable component for Angular2 framework",
   "main": "datatable",
   "scripts": {
@@ -55,7 +55,7 @@
     "typings": "^0.8.1",
     "zone.js": "^0.6.12"
   },
-  "dependencies": {
+  "peerDependencies": {
     "@angular/core": "^2.0.0-rc.0",
     "lodash": "^4.0.0",
     "rxjs": "^5.0.0-beta.6"
