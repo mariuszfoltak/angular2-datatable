@@ -5,6 +5,10 @@
 [![Test Coverage](https://codeclimate.com/github/mariuszfoltak/angular2-datatable/badges/coverage.svg)](https://codeclimate.com/github/mariuszfoltak/angular2-datatable/coverage)
 [![npm downloads](https://img.shields.io/npm/dm/angular2-datatable.svg)](https://npmjs.org/angular2-datatable)
 
+## Demo
+
+Check [live demo](http://plnkr.co/edit/tINlfy?p=preview) in plunker
+
 ## Installation
 
 ```
