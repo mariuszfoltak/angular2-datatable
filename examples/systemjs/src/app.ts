@@ -1,7 +1,6 @@
-import {Component} from 'angular2/core';
-import {bootstrap} from 'angular2/platform/browser';
-import {DatePipe} from "angular2/common";
-import {HTTP_PROVIDERS, Http} from "angular2/http";
+import {Component} from '@angular/core';
+import {DatePipe} from "@angular/common";
+import {HTTP_PROVIDERS, Http} from "@angular/http";
 import {DataTableDirectives} from 'angular2-datatable/datatable';
 
 
@@ -34,5 +33,3 @@ export class App {
     }
 
 }
-
-bootstrap(App);

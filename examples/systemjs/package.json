@@ -3,8 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
+    "postinstall": "tsd install",
     "watch": "rm -rf build && mkdir build && tsc -w",
-    "build": "rm -rf build && mkdir build && tsc || true",
+    "prebuild": "rm -rf build && mkdir build",
+    "build": "tsc",
     "start": "lite-server",
     "tsc": "tsc",
     "tsd": "tsd install"
@@ -17,14 +19,19 @@
     "tsd": "^0.6.5"
   },
   "dependencies": {
-    "angular2": "2.0.0-beta.12",
+    "@angular/common": "^2.0.0-rc.1",
+    "@angular/compiler": "^2.0.0-rc.1",
+    "@angular/core": "2.0.0-rc.1",
+    "@angular/http": "2.0.0-rc.1",
+    "@angular/platform-browser": "^2.0.0-rc.1",
+    "@angular/platform-browser-dynamic": "^2.0.0-rc.1",
     "angular2-datatable": "0.3.0",
     "bootstrap": "^3.3.6",
     "es6-shim": "^0.35.0",
     "lodash": "^4.6.1",
     "reflect-metadata": "0.1.2",
-    "rxjs": "5.0.0-beta.2",
+    "rxjs": "5.0.0-beta.6",
     "systemjs": "^0.19.9",
-    "zone.js": "^0.6.4"
+    "zone.js": "0.6.12"
   }
 }

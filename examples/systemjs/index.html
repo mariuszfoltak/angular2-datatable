@@ -7,29 +7,18 @@
     <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap-theme.min.css">
 
-    <script src="/node_modules/es6-shim/es6-shim.min.js"></script>
-    <script src="/node_modules/angular2/bundles/angular2-polyfills.js"></script>
-    <script src="/node_modules/systemjs/dist/system.src.js"></script>
-    <script src="/node_modules/angular2/bundles/http.min.js"></script>
+    <!-- 1. Load libraries -->
+    <!-- Polyfill(s) for older browsers -->
+    <script src="node_modules/es6-shim/es6-shim.min.js"></script>
 
+    <script src="node_modules/zone.js/dist/zone.js"></script>
+    <script src="node_modules/reflect-metadata/Reflect.js"></script>
+    <script src="node_modules/systemjs/dist/system.src.js"></script>
+
+    <!-- 2. Configure SystemJS -->
+    <script src="systemjs.conf.js"></script>
     <script>
-        System.config({
-            defaultJSExtensions: true,
-            packages: {
-                "/angular2": {"defaultExtension": false}
-            },
-            map: {
-                'angular2-datatable': 'node_modules/angular2-datatable',
-                'lodash': 'node_modules/lodash/lodash.js'
-            }
-        });
-    </script>
-
-    <script src="/node_modules/rxjs/bundles/Rx.js"></script>
-    <script src="/node_modules/angular2/bundles/angular2.js"></script>
-
-    <script>
-        System.import('build/app').catch(console.log.bind(console));
+        System.import('src').catch(function(err){ console.error(err);  });
     </script>
 
 </head>
