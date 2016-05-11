@@ -1,4 +1,4 @@
-# DataTable component for Angular2
+# Table component with sorting and pagination for Angular2
 [![npm version](https://badge.fury.io/js/angular2-datatable.svg)](https://badge.fury.io/js/angular2-datatable)
 [![Build Status](https://travis-ci.org/mariuszfoltak/angular2-datatable.svg?branch=master)](https://travis-ci.org/mariuszfoltak/angular2-datatable)
 [![Code Climate](https://codeclimate.com/github/mariuszfoltak/angular2-datatable/badges/gpa.svg)](https://codeclimate.com/github/mariuszfoltak/angular2-datatable)
@@ -12,14 +12,14 @@ Check [live demo](http://plnkr.co/edit/tINlfy?p=preview) in plunker
 ## Installation
 
 ```
-npm -i angular2-datatable
+npm i -S angular2-datatable
 ```
 
 ## Usage example
 
 app.ts
 ```typescript
- import {Component} from 'angular2/core';
+ import {Component} from '@angular/core';
  import {DataTableDirectives} from 'angular2-datatable/datatable';
 
  @Component({
@@ -52,7 +52,7 @@ app.html
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="#item of mf.data">
+    <tr *ngFor="let item of mf.data">
         <td>{{item.name}}</td>
         <td>{{item.email}}</td>
         <td class="text-right">{{item.age}}</td>

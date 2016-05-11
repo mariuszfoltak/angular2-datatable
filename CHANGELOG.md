@@ -1,5 +1,13 @@
 #Changelog
 
+## 0.4.2 (2016-05-08)
+
+Breaking changes:
+
+    - update angular library to 2.0.0-rc.0
+
+#Changelog
+
 ## 0.3.0 (2016-05-08)
 
 Breaking changes:

@@ -1,6 +1,6 @@
 {
   "name": "angular2-datatable",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "DataTable component for Angular2 framework",
   "main": "datatable",
   "scripts": {
