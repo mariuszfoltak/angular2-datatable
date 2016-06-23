@@ -18,8 +18,8 @@ export class DefaultSorter {
 
     public constructor(private mfTable: DataTable) {
         mfTable.onSortChange.subscribe((event:SortEvent) => {
-            this.isSortedByMeAsc = (event.sortBy === this.sortBy && event.sortOrder === "asc");
-            this.isSortedByMeDesc = (event.sortBy === this.sortBy && event.sortOrder === "desc");
+            this.isSortedByMeAsc = (event.sortBy.toString() === this.sortBy.toString() && event.sortOrder === "asc");
+            this.isSortedByMeDesc = (event.sortBy.toString() === this.sortBy.toString() && event.sortOrder === "desc");
         })
     }
 

@@ -1,4 +1,4 @@
-import {Directive, Input, EventEmitter, SimpleChange, OnChanges, DoCheck} from "@angular/core";
+import {Directive, Input, EventEmitter, SimpleChange, OnInit, OnChanges, DoCheck} from "@angular/core";
 import * as _ from "lodash";
 
 export interface SortEvent {
@@ -20,8 +20,9 @@ export interface DataEvent {
     selector: 'table[mfData]',
     exportAs: 'mfDataTable'
 })
-export class DataTable implements OnChanges, DoCheck {
+export class DataTable implements OnInit, OnChanges, DoCheck {
 
+    @Input() public id: string;
     @Input("mfData") public inputData:any[] = [];
 
     private sortBy = "";
@@ -29,6 +30,7 @@ export class DataTable implements OnChanges, DoCheck {
 
     @Input("mfRowsOnPage") public rowsOnPage = 1000;
     @Input("mfActivePage") public activePage = 1;
+    @Input("mfSaveState") public saveState = false;
 
     private mustRecalculateData = false;
 
@@ -70,6 +72,15 @@ export class DataTable implements OnChanges, DoCheck {
         return newActivePage;
     }
 
+    public ngOnInit() {
+        if (this.saveState) {
+            if (this.id === null) {
+                throw new Error('id is required if state saving is enabled');
+            }
+            this.loadState();
+        }
+    }
+
     public ngOnChanges(changes:{[key:string]:SimpleChange}):any {
         if (changes["inputData"]) {
             this.inputData = this.inputData || [];
@@ -98,5 +109,48 @@ export class DataTable implements OnChanges, DoCheck {
         data = _.orderBy(data, [this.sortBy], [this.sortOrder]);
         data = _.slice(data, offset, offset + this.rowsOnPage);
         this.data = data;
+
+        if (this.saveState) {
+            this.doSaveState();
+        }
+    }
+
+    private doSaveState() {
+        localStorage.setItem(this.id + '.activePage', this.activePage.toString());
+        localStorage.setItem(this.id + '.rowsOnPage', this.rowsOnPage.toString());
+        localStorage.setItem(this.id + '.sortBy', this.sortBy);
+        localStorage.setItem(this.id + '.sortOrder', this.sortOrder);
+    }
+
+    private loadState() {
+        let activePage, rowsOnPage, sortBy, sortOrder;
+
+        let value = localStorage.getItem(this.id + '.activePage');
+        if (value) {
+            activePage = +value;
+        }
+        value = localStorage.getItem(this.id + '.rowsOnPage');
+        if (value) {
+            rowsOnPage = +value;
+        }
+        value = localStorage.getItem(this.id + '.sortBy');
+        if (value) {
+            if (value.startsWith('function ')) {
+                sortBy = eval('(' + value + ')');
+            } else {
+                sortBy = value;
+            }
+        }
+        value = localStorage.getItem(this.id + '.sortOrder');
+        if (value) {
+            sortOrder = value;
+        }
+
+        if (activePage && rowsOnPage) {
+            this.setPage(activePage, rowsOnPage);
+        }
+        if (sortBy && sortOrder) {
+            this.setSort(sortBy, sortOrder);
+        }
     }
 }
