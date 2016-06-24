@@ -2,7 +2,7 @@ import {Directive, Input, EventEmitter, SimpleChange, OnInit, OnChanges, DoCheck
 import * as _ from "lodash";
 
 export interface SortEvent {
-    sortBy: string;
+    id: string;
     sortOrder: string
 }
 
@@ -25,6 +25,7 @@ export class DataTable implements OnInit, OnChanges, DoCheck {
     @Input() public id: string;
     @Input("mfData") public inputData:any[] = [];
 
+    private sortById = "";
     private sortBy = "";
     private sortOrder = "asc";
 
@@ -41,16 +42,21 @@ export class DataTable implements OnInit, OnChanges, DoCheck {
     public onPageChange = new EventEmitter<PageEvent>();
 
     public getSort():SortEvent {
-        return {sortBy: this.sortBy, sortOrder: this.sortOrder};
+        return {id: this.sortById, sortOrder: this.sortOrder};
     }
 
-    public setSort(sortBy:string, sortOrder:string):void {
-        if (this.sortBy !== sortBy || this.sortOrder !== sortOrder) {
-            this.sortBy = sortBy;
+    public setSort(id: string, sortOrder:string):void {
+        if (this.sortById !== id || this.sortOrder !== sortOrder) {
+            this.sortById = id;
             this.sortOrder = sortOrder;
             this.mustRecalculateData = true;
-            this.onSortChange.emit({sortBy: sortBy, sortOrder: sortOrder});
+            this.onSortChange.emit({id: id, sortOrder: sortOrder});
         }
+    }
+    
+    public setSortBy(sortBy: string) {
+        this.sortBy = sortBy;
+        this.mustRecalculateData = true;
     }
 
     public getPage():PageEvent {
@@ -121,12 +127,12 @@ export class DataTable implements OnInit, OnChanges, DoCheck {
     private doSaveState() {
         localStorage.setItem(this.id + '.activePage', this.activePage.toString());
         localStorage.setItem(this.id + '.rowsOnPage', this.rowsOnPage.toString());
-        localStorage.setItem(this.id + '.sortBy', this.sortBy);
+        localStorage.setItem(this.id + '.sortById', this.sortById);
         localStorage.setItem(this.id + '.sortOrder', this.sortOrder);
     }
 
     private loadState() {
-        let activePage, rowsOnPage, sortBy, sortOrder;
+        let activePage, rowsOnPage, sortById, sortOrder;
 
         let value = localStorage.getItem(this.id + '.activePage');
         if (value) {
@@ -136,13 +142,9 @@ export class DataTable implements OnInit, OnChanges, DoCheck {
         if (value) {
             rowsOnPage = +value;
         }
-        value = localStorage.getItem(this.id + '.sortBy');
+        value = localStorage.getItem(this.id + '.sortById');
         if (value) {
-            if (value.startsWith('function ')) {
-                sortBy = eval('(' + value + ')');
-            } else {
-                sortBy = value;
-            }
+            sortById = value;
         }
         value = localStorage.getItem(this.id + '.sortOrder');
         if (value) {
@@ -152,8 +154,8 @@ export class DataTable implements OnInit, OnChanges, DoCheck {
         if (activePage && rowsOnPage) {
             this.setPage(activePage, rowsOnPage);
         }
-        if (sortBy && sortOrder) {
-            this.setSort(sortBy, sortOrder);
+        if (sortById && sortOrder) {
+            this.setSort(sortById, sortOrder);
         }
     }
 }

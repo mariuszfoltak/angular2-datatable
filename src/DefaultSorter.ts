@@ -11,6 +11,7 @@ import {DataTable, SortEvent} from "./DataTable";
         </a>`
 })
 export class DefaultSorter {
+    @Input("id") private id: string;
     @Input("by") private sortBy: string;
 
     private isSortedByMeAsc: boolean = false;
@@ -18,16 +19,20 @@ export class DefaultSorter {
 
     public constructor(private mfTable: DataTable) {
         mfTable.onSortChange.subscribe((event:SortEvent) => {
-            this.isSortedByMeAsc = (event.sortBy.toString() === this.sortBy.toString() && event.sortOrder === "asc");
-            this.isSortedByMeDesc = (event.sortBy.toString() === this.sortBy.toString() && event.sortOrder === "desc");
+            this.isSortedByMeAsc = (event.id === this.id && event.sortOrder === "asc");
+            this.isSortedByMeDesc = (event.id === this.id && event.sortOrder === "desc");
+            if (event.id === this.id) {
+                mfTable.setSortBy(this.sortBy);
+            }
         })
     }
 
     private sort() {
         if(this.isSortedByMeAsc) {
-            this.mfTable.setSort(this.sortBy, "desc");
+            this.mfTable.setSortBy(this.sortBy);
+            this.mfTable.setSort(this.id, "desc");
         } else {
-            this.mfTable.setSort(this.sortBy, "asc");
+            this.mfTable.setSort(this.id, "asc");
         }
     }
 }
