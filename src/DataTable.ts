@@ -1,4 +1,4 @@
-import {Directive, Input, EventEmitter, SimpleChange, OnInit, OnChanges, DoCheck} from "@angular/core";
+import {Directive, Input, EventEmitter, SimpleChange, OnChanges, DoCheck, AfterViewInit} from "@angular/core";
 import * as _ from "lodash";
 
 export interface SortEvent {
@@ -20,11 +20,12 @@ export interface DataEvent {
     selector: 'table[mfData]',
     exportAs: 'mfDataTable'
 })
-export class DataTable implements OnInit, OnChanges, DoCheck {
+export class DataTable implements AfterViewInit, OnChanges, DoCheck {
 
     @Input() public id: string;
     @Input("mfData") public inputData:any[] = [];
 
+    private loadedState: boolean;
     private sortById = "";
     private sortBy = "";
     private sortOrder = "asc";
@@ -78,13 +79,16 @@ export class DataTable implements OnInit, OnChanges, DoCheck {
         return newActivePage;
     }
 
-    public ngOnInit() {
-        if (this.saveState) {
-            if (this.id === null) {
-                throw new Error('id is required if state saving is enabled');
+    public ngAfterViewInit() {
+        // Need setTimeout until this issue is fixed: https://github.com/angular/angular/issues/6005
+        setTimeout(() => {
+            if (this.saveState) {
+                if (this.id === null) {
+                    throw new Error('id is required if state saving is enabled');
+                }
+                this.loadState();
             }
-            this.loadState();
-        }
+        });
     }
 
     public ngOnChanges(changes:{[key:string]:SimpleChange}):any {
@@ -103,6 +107,9 @@ export class DataTable implements OnInit, OnChanges, DoCheck {
     }
 
     public ngDoCheck():any {
+        if (this.loadedState) {
+            this.doSaveState();
+        }
         if (this.mustRecalculateData) {
             this.fillData();
             this.mustRecalculateData = false;
@@ -118,10 +125,6 @@ export class DataTable implements OnInit, OnChanges, DoCheck {
         data = _.orderBy(data, [this.sortBy], [this.sortOrder]);
         data = _.slice(data, offset, offset + this.rowsOnPage);
         this.data = data;
-
-        if (this.saveState) {
-            this.doSaveState();
-        }
     }
 
     private doSaveState() {
@@ -151,6 +154,7 @@ export class DataTable implements OnInit, OnChanges, DoCheck {
             sortOrder = value;
         }
 
+        this.loadedState = true;
         if (activePage && rowsOnPage) {
             this.setPage(activePage, rowsOnPage);
         }
