@@ -13,20 +13,20 @@
         <div class="panel panel-default">
             <div class="panel-heading">User information</div>
 
-            <table class="table table-striped" [mfData]="data" #mf="mfDataTable" [mfRowsOnPage]="10">
+            <table class="table table-striped" id="test-table" [mfData]="data" #mf="mfDataTable" [mfRowsOnPage]="10" [mfSaveState]="true">
                 <thead>
                 <tr>
                     <th style="width: 20%">
-                        <mfDefaultSorter [by]="sortByWordLength">Name</mfDefaultSorter>
+                        <mfDefaultSorter id="sortByWordLength" [by]="sortByWordLength">Name</mfDefaultSorter>
                     </th>
                     <th style="width: 50%">
-                        <mfDefaultSorter by="email">Email</mfDefaultSorter>
+                        <mfDefaultSorter id="email" by="email">Email</mfDefaultSorter>
                     </th>
                     <th style="width: 10%">
-                        <mfDefaultSorter by="age">Age</mfDefaultSorter>
+                        <mfDefaultSorter id="age" by="age">Age</mfDefaultSorter>
                     </th>
                     <th style="width: 20%">
-                        <mfDefaultSorter by="city">City</mfDefaultSorter>
+                        <mfDefaultSorter id="city" by="city">City</mfDefaultSorter>
                     </th>
                 </tr>
                 </thead>
