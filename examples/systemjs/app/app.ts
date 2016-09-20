@@ -1,22 +1,16 @@
 import {Component} from '@angular/core';
-import {DatePipe} from "@angular/common";
-import {HTTP_PROVIDERS, Http} from "@angular/http";
-import {DataTableDirectives} from 'angular2-datatable/datatable';
-
+import {Http} from "@angular/http";
 
 @Component({
     selector: 'app',
-    templateUrl: 'src/app.html',
-    providers: [HTTP_PROVIDERS],
-    directives: [DataTableDirectives],
-    pipes: [DatePipe]
+    templateUrl: 'app/app.html'
 })
 export class App {
 
     private data;
 
     constructor(private http:Http) {
-        http.get("/src/data.json")
+        http.get("/app/data.json")
             .subscribe((data)=> {
                 setTimeout(()=> {
                     this.data = data.json();
