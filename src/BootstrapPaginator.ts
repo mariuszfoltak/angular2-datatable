@@ -48,8 +48,7 @@ import * as _ from "lodash";
             </li>
         </nav>
     </mfPaginator>
-    `,
-    directives: [Paginator]
+    `
 })
 export class BootstrapPaginator implements OnChanges {
     @Input("rowsOnPageSet") private rowsOnPageSet = [];

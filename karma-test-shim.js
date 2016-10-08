@@ -15,17 +15,31 @@ System.config({
             map: Object.keys(window.__karma__.files).filter(onlyAppFiles).reduce(createPathRecords, {})
         },
         '@angular/core': {
-            main: 'index.js',
+            main: 'bundles/core.umd.js',
+            defaultExtension: 'js'
+        },
+        '@angular/common': {
+            main: 'bundles/common.umd.js',
             defaultExtension: 'js'
         },
         '@angular/platform-browser': {
-            main: 'index.js',
+            main: 'bundles/platform-browser.umd.js',
+            defaultExtension: 'js'
+        },
+        'rxjs': {
+            main: 'Rx.js',
+            defaultExtension: 'js'
+        },
+        'traceur': {
+            main: 'traceur.js',
             defaultExtension: 'js'
         }
     },
     map: {
         'lodash': '/base/node_modules/lodash/lodash.js',
-        '@angular': 'base/node_modules/@angular'
+        '@angular': 'base/node_modules/@angular',
+        'rxjs': 'base/node_modules/rxjs',
+        'traceur': 'base/node_modules/traceur/bin'
     }
 });
 

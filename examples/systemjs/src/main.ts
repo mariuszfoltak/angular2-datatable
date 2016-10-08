@@ -1,5 +1,5 @@
-import {bootstrap} from '@angular/platform-browser-dynamic';
+import {platformBrowserDynamic} from "@angular/platform-browser-dynamic";
+import {AppModule} from "./AppModule";
 
-import { App } from './app';
-
-bootstrap(App);
+const platform = platformBrowserDynamic();
+platform.bootstrapModule(AppModule);
