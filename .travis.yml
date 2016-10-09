@@ -3,6 +3,8 @@ node_js:
 - '5'
 before_install:
 - npm install -g codeclimate-test-reporter
+after_install:
+- npm run typings
 script: npm test -- --browsers PhantomJS
 after_script:
 - npm run coverage-remap
