@@ -95,7 +95,13 @@ export class DataTable implements OnChanges, DoCheck {
 
         let offset = (this.activePage - 1) * this.rowsOnPage;
         let data = this.inputData;
-        data = _.orderBy(data, [this.sortBy], [this.sortOrder]);
+        data = _.orderBy(data, (row)=>{
+            var value = row[this.sortBy];
+            if(value && typeof value === 'string' || value instanceof String) {
+                return value.toLowerCase();
+            }
+            return value;
+        }, [this.sortOrder]);
         data = _.slice(data, offset, offset + this.rowsOnPage);
         this.data = data;
     }

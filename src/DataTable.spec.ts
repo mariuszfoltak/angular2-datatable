@@ -8,11 +8,11 @@ describe("DataTable directive tests", ()=> {
     beforeEach(()=> {
         datatable = new DataTable();
         datatable.inputData = [
-            {id: 3, name: 'Poland'},
-            {id: 1, name: 'Slovakia'},
-            {id: 2, name: 'Czech'},
-            {id: 5, name: 'Hungary'},
-            {id: 4, name: 'Ukraine'}
+            {id: 3, name: 'banana'},
+            {id: 1, name: 'Duck'},
+            {id: 2, name: 'ącki'},
+            {id: 5, name: 'Ðrone'},
+            {id: 4, name: 'Ananas'}
         ];
         datatable.ngOnChanges({inputData: new SimpleChange(null, datatable.inputData)});
     });
@@ -34,14 +34,14 @@ describe("DataTable directive tests", ()=> {
         it("data should be 2 first items", ()=> {
             datatable.rowsOnPage = 2;
             datatable.ngDoCheck();
-            expect(datatable.data).toEqual([{id: 3, name: 'Poland'}, {id: 1, name: 'Slovakia'}]);
+            expect(datatable.data).toEqual([{id: 3, name: 'banana'}, {id: 1, name: 'Duck'}]);
         });
 
         it("data should be 3. and 4. items", ()=> {
             datatable.rowsOnPage = 2;
             datatable.activePage = 2;
             datatable.ngDoCheck();
-            expect(datatable.data).toEqual([{id: 2, name: 'Czech'}, {id: 5, name: 'Hungary'}]);
+            expect(datatable.data).toEqual([{id: 2, name: 'ącki'}, {id: 5, name: 'Ðrone'}]);
         });
 
         it("shouldn't recalculate data when no changes", ()=>{
@@ -67,20 +67,20 @@ describe("DataTable directive tests", ()=> {
         it("data should be 3. and 4. items when page change", ()=> {
             datatable.setPage(2,2);
             datatable.ngDoCheck();
-            expect(datatable.data).toEqual([{id: 2, name: 'Czech'}, {id: 5, name: 'Hungary'}]);
+            expect(datatable.data).toEqual([{id: 2, name: 'ącki'}, {id: 5, name: 'Ðrone'}]);
         });
 
         it("data should be three first items when page change", ()=> {
             datatable.setPage(1,3);
             datatable.ngDoCheck();
-            expect(datatable.data).toEqual([{id: 3, name: 'Poland'},{id: 1, name: 'Slovakia'},{id: 2, name: 'Czech'}]);
+            expect(datatable.data).toEqual([{id: 3, name: 'banana'},{id: 1, name: 'Duck'},{id: 2, name: 'ącki'}]);
         });
 
         it("data should be two last items when page change", ()=> {
             datatable.setPage(2,3);
             datatable.setPage(2,3);
             datatable.ngDoCheck();
-            expect(datatable.data).toEqual([{id: 5, name: 'Hungary'},{id: 4, name: 'Ukraine'}]);
+            expect(datatable.data).toEqual([{id: 5, name: 'Ðrone'},{id: 4, name: 'Ananas'}]);
         });
     });
 
@@ -104,11 +104,23 @@ describe("DataTable directive tests", ()=> {
             datatable.setSort("name", "asc");
             datatable.ngDoCheck();
             expect(datatable.data).toEqual([
-                {id: 2, name: 'Czech'},
-                {id: 5, name: 'Hungary'},
-                {id: 3, name: 'Poland'},
-                {id: 1, name: 'Slovakia'},
-                {id: 4, name: 'Ukraine'}
+                {id: 4, name: 'Ananas'},
+                {id: 3, name: 'banana'},
+                {id: 1, name: 'Duck'},
+                {id: 5, name: 'Ðrone'},
+                {id: 2, name: 'ącki'}
+            ])
+        });
+
+        it("should sort data descending by id", ()=>{
+            datatable.setSort("id", "desc");
+            datatable.ngDoCheck();
+            expect(datatable.data).toEqual([
+                {id: 5, name: 'Ðrone'},
+                {id: 4, name: 'Ananas'},
+                {id: 3, name: 'banana'},
+                {id: 2, name: 'ącki'},
+                {id: 1, name: 'Duck'}
             ])
         });
     });
