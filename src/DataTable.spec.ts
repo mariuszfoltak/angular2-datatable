@@ -3,7 +3,7 @@ import {SimpleChange} from "@angular/core";
 import {DataTable} from "./DataTable";
 
 describe("DataTable directive tests", ()=> {
-    let datatable:DataTable;
+    let datatable: DataTable;
 
     beforeEach(()=> {
         datatable = new DataTable();
@@ -44,7 +44,7 @@ describe("DataTable directive tests", ()=> {
             expect(datatable.data).toEqual([{id: 2, name: 'ącki'}, {id: 5, name: 'Ðrone'}]);
         });
 
-        it("shouldn't recalculate data when no changes", ()=>{
+        it("shouldn't recalculate data when no changes", ()=> {
             datatable.ngDoCheck();
             let data = datatable.data;
             datatable.ngOnChanges({});
@@ -53,7 +53,7 @@ describe("DataTable directive tests", ()=> {
         });
     });
 
-    describe("pagination", ()=>{
+    describe("pagination", ()=> {
 
         beforeEach(()=> {
             datatable.rowsOnPage = 2;
@@ -65,33 +65,33 @@ describe("DataTable directive tests", ()=> {
         });
 
         it("data should be 3. and 4. items when page change", ()=> {
-            datatable.setPage(2,2);
+            datatable.setPage(2, 2);
             datatable.ngDoCheck();
             expect(datatable.data).toEqual([{id: 2, name: 'ącki'}, {id: 5, name: 'Ðrone'}]);
         });
 
         it("data should be three first items when page change", ()=> {
-            datatable.setPage(1,3);
+            datatable.setPage(1, 3);
             datatable.ngDoCheck();
-            expect(datatable.data).toEqual([{id: 3, name: 'banana'},{id: 1, name: 'Duck'},{id: 2, name: 'ącki'}]);
+            expect(datatable.data).toEqual([{id: 3, name: 'banana'}, {id: 1, name: 'Duck'}, {id: 2, name: 'ącki'}]);
         });
 
         it("data should be two last items when page change", ()=> {
-            datatable.setPage(2,3);
-            datatable.setPage(2,3);
+            datatable.setPage(2, 3);
+            datatable.setPage(2, 3);
             datatable.ngDoCheck();
-            expect(datatable.data).toEqual([{id: 5, name: 'Ðrone'},{id: 4, name: 'Ananas'}]);
+            expect(datatable.data).toEqual([{id: 5, name: 'Ðrone'}, {id: 4, name: 'Ananas'}]);
         });
     });
 
-    describe("sorting", ()=>{
+    describe("sorting", ()=> {
 
         it("id should return current sort setting", () => {
             datatable.setSort("id", "desc");
             expect(datatable.getSort()).toEqual({sortBy: "id", sortOrder: "desc"});
         });
 
-        it("shouldn't refresh data when set page with same settings", ()=>{
+        it("shouldn't refresh data when set page with same settings", ()=> {
             datatable.setSort("name", "asc");
             datatable.ngDoCheck();
             let data = datatable.data;
@@ -100,7 +100,7 @@ describe("DataTable directive tests", ()=> {
             expect(datatable.data).toBe(data);
         });
 
-        it("should sort data ascending by name", ()=>{
+        it("should sort data ascending by name", ()=> {
             datatable.setSort("name", "asc");
             datatable.ngDoCheck();
             expect(datatable.data).toEqual([
@@ -112,7 +112,7 @@ describe("DataTable directive tests", ()=> {
             ])
         });
 
-        it("should sort data descending by id", ()=>{
+        it("should sort data descending by id", ()=> {
             datatable.setSort("id", "desc");
             datatable.ngDoCheck();
             expect(datatable.data).toEqual([
@@ -122,6 +122,45 @@ describe("DataTable directive tests", ()=> {
                 {id: 2, name: 'ącki'},
                 {id: 1, name: 'Duck'}
             ])
+        });
+    });
+
+    describe("data change", ()=> {
+        it("should change data", ()=> {
+            let newData = [{id: 5, name: 'Ðrone'}, {id: 4, name: 'Ananas'}];
+            datatable.ngOnChanges({inputData: new SimpleChange(datatable.inputData, newData)});
+            datatable.ngDoCheck();
+            expect(datatable.data).toEqual([{id: 5, name: 'Ðrone'}, {id: 4, name: 'Ananas'}]);
+        });
+
+        it("should change page when no data on current page", ()=> {
+            datatable.setPage(2, 2);
+            datatable.ngDoCheck();
+
+            let newData = [{id: 5, name: 'Ðrone'}, {id: 4, name: 'Ananas'}];
+            datatable.ngOnChanges({inputData: new SimpleChange(datatable.inputData, newData)});
+            datatable.ngDoCheck();
+            expect(datatable.data).toEqual(newData);
+        });
+
+        it("shouldn't change page when can display data", ()=> {
+            datatable.setPage(2, 1);
+            datatable.ngDoCheck();
+
+            let newData = [{id: 5, name: 'Ðrone'}, {id: 1, name: 'Duck'}, {id: 4, name: 'Ananas'}];
+            datatable.ngOnChanges({inputData: new SimpleChange(datatable.inputData, newData)});
+            datatable.ngDoCheck();
+            expect(datatable.data).toEqual([{id: 1, name: 'Duck'}]);
+        });
+
+        it("shouldn't change page to 0 when data is empty", ()=> {
+            datatable.setPage(2, 1);
+            datatable.ngDoCheck();
+
+            let newData = [];
+            datatable.ngOnChanges({inputData: new SimpleChange(datatable.inputData, newData)});
+            datatable.ngDoCheck();
+            expect(datatable.activePage).toEqual(1);
         });
     });
 });

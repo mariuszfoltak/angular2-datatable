@@ -70,9 +70,16 @@ export class DataTable implements OnChanges, DoCheck {
         return newActivePage;
     }
 
+    private recalculatePage() {
+        let lastPage = Math.ceil(this.inputData.length / this.rowsOnPage);
+        this.activePage = lastPage < this.activePage ? lastPage : this.activePage;
+        this.activePage = this.activePage || 1;
+    }
+
     public ngOnChanges(changes:{[key:string]:SimpleChange}):any {
         if (changes["inputData"]) {
-            this.inputData = this.inputData || [];
+            this.inputData = changes["inputData"].currentValue || [];
+            this.recalculatePage();
             this.onPageChange.emit({
                 activePage: this.activePage,
                 rowsOnPage: this.rowsOnPage,

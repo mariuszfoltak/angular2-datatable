@@ -9,6 +9,7 @@ import {Http} from "@angular/http";
 export class AppComponent {
 
     public data;
+    public filterQuery = "";
 
     constructor(private http:Http) {
         http.get("/src/data.json")
