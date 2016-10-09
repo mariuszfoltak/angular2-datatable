@@ -17,22 +17,25 @@ npm i -S angular2-datatable
 
 ## Usage example
 
-app.ts
+AppModule.ts
 ```typescript
- import {Component} from '@angular/core';
- import {DataTableDirectives} from 'angular2-datatable/datatable';
+import {NgModule} from "@angular/core";
+...
+import {DataTableModule} from "angular2-datatable";
 
- @Component({
-     selector: 'app',
-     templateUrl: 'app.html',
-     directives: [DataTableDirectives]
- })
- export class App {
-     private data: any[] = ...
- }
+@NgModule({
+    imports: [
+        ...
+        DataTableModule
+    ],
+    ...
+})
+export class AppModule {
+
+}
 ```
 
-app.html
+AppComponent.html
 ```html
 <table class="table table-striped" [mfData]="data" #mf="mfDataTable" [mfRowsOnPage]="5">
     <thead>

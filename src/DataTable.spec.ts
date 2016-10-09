@@ -123,6 +123,27 @@ describe("DataTable directive tests", ()=> {
                 {id: 1, name: 'Duck'}
             ])
         });
+
+        it("should sort data by two values", ()=>{
+            let newData = [
+                {name: 'Claire', age: 9},
+                {name: 'Anna', age: 34},
+                {name: 'Claire', age: 16},
+                {name: 'Claire', age: 7},
+                {name: 'Anna', age: 12}
+            ];
+            datatable.ngOnChanges({inputData: new SimpleChange(datatable.inputData, newData)});
+            datatable.setSort(['name', 'age'], "asc");
+            datatable.ngDoCheck();
+
+            expect(datatable.data).toEqual([
+                {name: 'Anna', age: 12},
+                {name: 'Anna', age: 34},
+                {name: 'Claire', age: 7},
+                {name: 'Claire', age: 9},
+                {name: 'Claire', age: 16}
+            ]);
+        });
     });
 
     describe("data change", ()=> {

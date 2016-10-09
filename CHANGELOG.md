@@ -1,5 +1,17 @@
 #Changelog
 
+## 0.5.0 (2016-10-09)
+
+Breaking changes:
+
+    - update angular library to 2.0.0
+    
+Bugfixes:
+    - sort case insensitive
+    - fixed pagination, fix #29, #33
+    
+#Changelog
+
 ## 0.4.2 (2016-05-11)
 
 Breaking changes:
