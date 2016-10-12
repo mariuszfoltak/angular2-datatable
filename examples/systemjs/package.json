@@ -7,6 +7,7 @@
     "watch": "rm -rf build && mkdir build && tsc -w",
     "prebuild": "rm -rf build && mkdir build",
     "build": "tsc",
+    "prestart": "tsc",
     "start": "lite-server",
     "tsc": "tsc",
     "tsd": "tsd install"
