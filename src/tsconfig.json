@@ -8,10 +8,13 @@
     "removeComments": true,
     "sourceMap": true,
     "outDir": "../lib",
-    "declaration": true
-  },
-  "exclude": [
-    "typings/main.d.ts",
-    "typings/main"
-  ]
+    "declaration": true,
+    "typeRoots": [
+      "../node_modules/@types"
+    ],
+    "lib": [
+      "dom",
+      "es2015"
+    ]
+  }
 }

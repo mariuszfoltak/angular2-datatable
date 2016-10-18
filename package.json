@@ -4,7 +4,6 @@
   "description": "DataTable component for Angular2 framework",
   "main": "index.js",
   "scripts": {
-    "typings": "cd src && typings install",
     "watch": "tsc -p src -w",
     "prebuild": "rm -rf lib",
     "build": "tsc -p src",
@@ -53,8 +52,9 @@
     "systemjs": "^0.19.39",
     "traceur": "0.0.108",
     "typescript": "^2.0.0",
-    "typings": "^0.8.1",
-    "zone.js": "^0.6.25"
+    "zone.js": "^0.6.25",
+    "@types/lodash": "^4.14.37",
+    "@types/jasmine": "^2.5.35"
   },
   "dependencies": {
     "@angular/core": "^2.0.0",
