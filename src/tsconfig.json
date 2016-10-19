@@ -16,5 +16,9 @@
       "dom",
       "es2015"
     ]
+  },
+  "angularCompilerOptions": {
+    "genDir": "../aot",
+    "skipMetadataEmit": false
   }
 }

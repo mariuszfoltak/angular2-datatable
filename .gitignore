@@ -5,3 +5,4 @@ node_modules
 /lib
 /src/typings/
 /coverage/
+/aot
