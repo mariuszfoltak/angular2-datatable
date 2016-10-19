@@ -36,6 +36,8 @@
   },
   "homepage": "https://github.com/mariuszfoltak/angular2-datatable#readme",
   "devDependencies": {
+    "@angular/compiler": "^2.0.0",
+    "@angular/platform-browser-dynamic": "^2.0.0",
     "core-js": "^2.4.1",
     "http-server": "^0.9.0",
     "jasmine-core": "^2.4.1",
