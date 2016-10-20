@@ -32,6 +32,7 @@ module.exports = function (config) {
             'node_modules/systemjs/dist/system.src.js',
 
             // Polyfills
+            'node_modules/systemjs/dist/system-polyfills.src.js',
             'node_modules/core-js/client/shim.js',
 
             // Zone.js
