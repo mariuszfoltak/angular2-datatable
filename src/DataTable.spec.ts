@@ -144,6 +144,27 @@ describe("DataTable directive tests", ()=> {
                 {name: 'Claire', age: 16}
             ]);
         });
+
+        it("should sort data by child property value", ()=>{
+            let newData = [
+                {name: 'Claire', city: { zip: '51111'}},
+                {name: 'Anna', city: { zip: '31111'}},
+                {name: 'Claire', city: { zip: '41111'}},
+                {name: 'Claire', city: { zip: '11111'}},
+                {name: 'Anna', city: { zip: '21111'}}
+            ];
+            datatable.ngOnChanges({inputData: new SimpleChange(datatable.inputData, newData)});
+            datatable.setSort("city.zip", "asc");
+            datatable.ngDoCheck();
+
+            expect(datatable.data).toEqual([
+                {name: 'Claire', city: { zip: '11111'}},
+                {name: 'Anna', city: { zip: '21111'}},
+                {name: 'Anna', city: { zip: '31111'}},
+                {name: 'Claire', city: { zip: '41111'}},
+                {name: 'Claire', city: { zip: '51111'}},
+            ]);
+        });
     });
 
     describe("data change", ()=> {
