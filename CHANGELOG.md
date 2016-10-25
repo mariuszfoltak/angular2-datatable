@@ -18,6 +18,7 @@ Breaking changes:
     - update angular library to 2.0.0
     
 Bugfixes:
+
     - sort case insensitive
     - fixed pagination, fix #29, #33
     
