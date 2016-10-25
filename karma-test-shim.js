@@ -3,84 +3,79 @@ Error.stackTraceLimit = Infinity;
 
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000;
 
+var builtPath = '/base/lib/';
+
 // // Cancel Karma's synchronous start,
 // // we will call `__karma__.start()` later, once all the specs are loaded.
-__karma__.loaded = function() {};
+__karma__.loaded = function () {
+};
+
+function isJsFile(path) {
+    return path.slice(-3) == '.js';
+}
+
+function isSpecFile(path) {
+    return /\.spec\.(.*\.)?js$/.test(path);
+}
+
+function isBuiltFile(path) {
+    return isJsFile(path) && (path.substr(0, builtPath.length) == builtPath);
+}
+
+var allSpecFiles = Object.keys(window.__karma__.files)
+    .filter(isSpecFile)
+    .filter(isBuiltFile);
 
 System.config({
+    baseURL: '/base',
+    // Extend usual application package list with test folder
     packages: {
-        'base/lib': {
-            defaultExtension: false,
-            format: 'cjs',
-            map: Object.keys(window.__karma__.files).filter(onlyAppFiles).reduce(createPathRecords, {})
-        },
-        '@angular/core': {
-            main: 'bundles/core.umd.js',
-            defaultExtension: 'js'
-        },
-        '@angular/common': {
-            main: 'bundles/common.umd.js',
-            defaultExtension: 'js'
-        },
-        '@angular/platform-browser': {
-            main: 'bundles/platform-browser.umd.js',
-            defaultExtension: 'js'
-        },
-        'rxjs': {
-            main: 'Rx.js',
-            defaultExtension: 'js'
-        },
-        'traceur': {
-            main: 'traceur.js',
+        'testing': {
+            main: 'index.js',
             defaultExtension: 'js'
         }
     },
+
+    // Assume npm: is set in `paths` in systemjs.config
+    // Map the angular testing umd bundles
     map: {
-        'lodash': '/base/node_modules/lodash/lodash.js',
-        '@angular': 'base/node_modules/@angular',
-        'rxjs': 'base/node_modules/rxjs',
-        'traceur': 'base/node_modules/traceur/bin'
+        '@angular/core/testing': 'npm:@angular/core/bundles/core-testing.umd.js',
+        '@angular/common/testing': 'npm:@angular/common/bundles/common-testing.umd.js',
+        '@angular/compiler/testing': 'npm:@angular/compiler/bundles/compiler-testing.umd.js',
+        '@angular/platform-browser/testing': 'npm:@angular/platform-browser/bundles/platform-browser-testing.umd.js',
+        '@angular/platform-browser-dynamic/testing': 'npm:@angular/platform-browser-dynamic/bundles/platform-browser-dynamic-testing.umd.js',
+        '@angular/http/testing': 'npm:@angular/http/bundles/http-testing.umd.js',
+        '@angular/router/testing': 'npm:@angular/router/bundles/router-testing.umd.js',
+        '@angular/forms/testing': 'npm:@angular/forms/bundles/forms-testing.umd.js'
     }
 });
 
-System.import('@angular/platform-browser/src/browser/browser_adapter.js')
-    .then(function(browser_adapter) { browser_adapter.BrowserDomAdapter.makeCurrent(); })
-    .then(function() { return Promise.all(resolveTestFiles()); })
-    .then(function() { __karma__.start(); }, function(error) { __karma__.error(error.stack || error); });
+System.import('systemjs.config.js')
+    .then(initTestBed)
+    .then(initTesting);
 
-function createPathRecords(pathsMapping, appPath) {
-    // creates local module name mapping to global path with karma's fingerprint in path, e.g.:
-    // './vg-player/vg-player':
-    // '/base/dist/vg-player/vg-player.js?f4523daf879cfb7310ef6242682ccf10b2041b3e'
-    var moduleName = './' + resolveKeyPathForMapping('base/lib/', appPath);
-    moduleName = moduleName.replace(/\.js$/, '');
-    pathsMapping[moduleName] = appPath + '?' + window.__karma__.files[appPath];
-    return pathsMapping;
+function initTestBed() {
+    return Promise.all([
+        System.import('@angular/core/testing'),
+        System.import('@angular/platform-browser-dynamic/testing')
+    ])
+
+        .then(function (providers) {
+            var coreTesting = providers[0];
+            var browserTesting = providers[1];
+
+            coreTesting.TestBed.initTestEnvironment(
+                browserTesting.BrowserDynamicTestingModule,
+                browserTesting.platformBrowserDynamicTesting());
+        })
 }
 
-function onlyAppFiles(filePath) {
-    return /\/base\/lib\/(?!.*\.spec\.js$).*\.js$/.test(filePath);
-}
-
-function onlySpecFiles(path) {
-    return /\.spec\.js$/.test(path);
-}
-
-function resolveTestFiles() {
-    return Object.keys(window.__karma__.files)  // All files served by Karma.
-        .filter(onlySpecFiles)
-        .map(function(moduleName) {
-            // loads all spec files via their global module names (e.g.
-            // 'base/dist/vg-player/vg-player.spec')
+// Import all spec files and start karma
+function initTesting() {
+    return Promise.all(
+        allSpecFiles.map(function (moduleName) {
             return System.import(moduleName);
-        });
-}
-
-function resolveKeyPathForMapping(basePathWhereToStart, appPath) {
-    var location = appPath.indexOf(basePathWhereToStart);
-    if (location > -1) {
-        return appPath.substring(basePathWhereToStart.length + 1);
-    } else {
-        return appPath;
-    }
+        })
+    )
+        .then(__karma__.start, __karma__.error);
 }

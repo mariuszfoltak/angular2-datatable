@@ -1,4 +1,3 @@
-/// <reference path="./typings/browser/ambient/jasmine/index.d.ts" />
 import {SimpleChange} from "@angular/core";
 import {DataTable} from "./DataTable";
 
@@ -124,7 +123,7 @@ describe("DataTable directive tests", ()=> {
             ])
         });
 
-        it("should sort data by two values", ()=>{
+        it("should sort data by two values", ()=> {
             let newData = [
                 {name: 'Claire', age: 9},
                 {name: 'Anna', age: 34},
