@@ -1,4 +1,15 @@
-#Changelog
+# Changelog
+
+## 0.5.1 (2016-10-25)
+
+Changes:
+    
+    - changed the old "typings" system to the new "@types" system
+    - added support for AOT compilation
+    
+Bugfixes:
+
+    - sorting by child properties (#41)
 
 ## 0.5.0 (2016-10-09)
 
