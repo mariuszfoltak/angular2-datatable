@@ -118,7 +118,10 @@ export class DataTable implements OnChanges, DoCheck {
 
     private caseInsensitiveIteratee(sortBy: string) {
         return (row: any): any => {
-            var value = row[sortBy];
+            var value = row;
+            for (let sortByProperty of sortBy.split('.')){
+                value = value[sortByProperty];
+            }
             if (value && typeof value === 'string' || value instanceof String) {
                 return value.toLowerCase();
             }
