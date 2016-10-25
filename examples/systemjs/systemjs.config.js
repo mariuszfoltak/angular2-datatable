@@ -10,8 +10,9 @@
         },
         // map tells the System loader where to look for things
         map: {
-            // our app is within the app folder
-            src: 'build',
+            // our app is within the build folder
+            app: 'build',
+
             // angular bundles
             '@angular/core': 'npm:@angular/core/bundles/core.umd.js',
             '@angular/common': 'npm:@angular/common/bundles/common.umd.js',
@@ -21,14 +22,15 @@
             '@angular/http': 'npm:@angular/http/bundles/http.umd.js',
             '@angular/router': 'npm:@angular/router/bundles/router.umd.js',
             '@angular/forms': 'npm:@angular/forms/bundles/forms.umd.js',
+
             // other libraries
             'rxjs': 'npm:rxjs',
             'angular2-datatable': 'npm:angular2-datatable',
-            'lodash': 'npm:lodash'
+            'lodash': 'npm:lodash/lodash.js'
         },
         // packages tells the System loader how to load when no filename and/or no extension
         packages: {
-            src: {
+            app: {
                 main: './main.js',
                 defaultExtension: 'js'
             },
@@ -37,10 +39,6 @@
             },
             'angular2-datatable': {
                 main: 'index.js',
-                defaultExtension: 'js'
-            },
-            lodash: {
-                main: 'lodash.js',
                 defaultExtension: 'js'
             }
         }

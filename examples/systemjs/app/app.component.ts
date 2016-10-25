@@ -1,18 +1,21 @@
-import {Component} from "@angular/core";
+import {Component, OnInit} from "@angular/core";
 import {Http} from "@angular/http";
 
 
 @Component({
     selector: 'app',
-    templateUrl: 'src/AppComponent.html'
+    templateUrl: 'app/app.component.html'
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
     public data;
     public filterQuery = "";
 
-    constructor(private http:Http) {
-        http.get("/src/data.json")
+    constructor(private http: Http) {
+    }
+
+    ngOnInit(): void {
+        this.http.get("/app/data.json")
             .subscribe((data)=> {
                 setTimeout(()=> {
                     this.data = data.json();
@@ -20,11 +23,11 @@ export class AppComponent {
             });
     }
 
-    public toInt(num:string) {
+    public toInt(num: string) {
         return +num;
     }
 
-    public sortByWordLength = (a:any) => {
+    public sortByWordLength = (a: any) => {
         return a.name.length;
     }
 
