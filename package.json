@@ -35,10 +35,7 @@
   },
   "homepage": "https://github.com/mariuszfoltak/angular2-datatable#readme",
   "devDependencies": {
-    "@angular/core": "^2.1.0",
     "@angular/compiler": "^2.1.0",
-    "@angular/common": "^2.1.0",
-    "@angular/platform-browser": "^2.1.0",
     "@angular/platform-browser-dynamic": "^2.1.0",
     "@angular/compiler-cli": "^2.1.0",
     "core-js": "^2.4.1",
@@ -49,11 +46,10 @@
     "karma-coverage": "^0.5.5",
     "karma-jasmine": "^0.3.8",
     "karma-phantomjs-launcher": "^1.0.0",
-    "lodash": "^4.0.0",
     "phantomjs-prebuilt": "^2.1.7",
     "reflect-metadata": "^0.1.8",
     "remap-istanbul": "^0.6.3",
-    "rxjs": "^5.0.0-beta.12",
+    "rxjs": "5.0.0-beta.12",
     "systemjs": "^0.19.39",
     "traceur": "0.0.108",
     "typescript": "^2.0.0",
@@ -62,9 +58,9 @@
     "@types/jasmine": "^2.5.35"
   },
   "dependencies": {
-    "@angular/core": "^2.0.0",
-    "@angular/common": "^2.0.0",
-    "@angular/platform-browser": "^2.0.0",
+    "@angular/core": "^2.1.0",
+    "@angular/common": "^2.1.0",
+    "@angular/platform-browser": "^2.1.0",
     "lodash": "^4.0.0"
   },
   "peerDependencies": {

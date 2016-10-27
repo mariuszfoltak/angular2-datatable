@@ -11,7 +11,7 @@ import {DataTable, SortEvent} from "./DataTable";
         </a>`
 })
 export class DefaultSorter {
-    @Input("by") private sortBy: string;
+    @Input("by") sortBy: string;
 
     private isSortedByMeAsc: boolean = false;
     private isSortedByMeDesc: boolean = false;
