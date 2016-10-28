@@ -4,9 +4,9 @@
   "description": "",
   "scripts": {
     "prebuild": "rimraf build",
-    "build": "tsc",
+    "build": "tsc -p app",
     "prestart": "npm run build",
-    "start": "concurrently \"tsc -w\" \"lite-server\" "
+    "start": "concurrently \"tsc -p app -w\" \"lite-server\" "
   },
   "author": "",
   "license": "ISC",
