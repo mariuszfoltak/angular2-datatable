@@ -11,20 +11,20 @@ import {DataTable, SortEvent} from "./DataTable";
         </a>`
 })
 export class DefaultSorter {
-    @Input("by") private sortBy: string;
+    @Input("by") sortBy: string;
 
-    private isSortedByMeAsc: boolean = false;
-    private isSortedByMeDesc: boolean = false;
+    isSortedByMeAsc: boolean = false;
+    isSortedByMeDesc: boolean = false;
 
     public constructor(private mfTable: DataTable) {
-        mfTable.onSortChange.subscribe((event:SortEvent) => {
+        mfTable.onSortChange.subscribe((event: SortEvent) => {
             this.isSortedByMeAsc = (event.sortBy === this.sortBy && event.sortOrder === "asc");
             this.isSortedByMeDesc = (event.sortBy === this.sortBy && event.sortOrder === "desc");
         })
     }
 
-    private sort() {
-        if(this.isSortedByMeAsc) {
+    sort() {
+        if (this.isSortedByMeAsc) {
             this.mfTable.setSort(this.sortBy, "desc");
         } else {
             this.mfTable.setSort(this.sortBy, "asc");
