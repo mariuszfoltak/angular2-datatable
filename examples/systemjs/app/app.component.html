@@ -1,0 +1,57 @@
+<div class="container">
+    <div class="col-xs-8 col-md-offset-2">
+
+        <div class="page-header">
+            <h1>
+                <span>Angular2 DataTable component</span><br/>
+                <small>by mariuszfoltak</small>
+            </h1>
+        </div>
+
+        <h2>Simple data table</h2>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">User information</div>
+
+            <table class="table table-striped" [mfData]="data | dataFilter : filterQuery" #mf="mfDataTable" [mfRowsOnPage]="10">
+                <thead>
+                    <tr>
+                        <th style="width: 20%">
+                            <mfDefaultSorter by="name">Name</mfDefaultSorter>
+                        </th>
+                        <th style="width: 50%">
+                            <mfDefaultSorter by="email">Email</mfDefaultSorter>
+                        </th>
+                        <th style="width: 10%">
+                            <mfDefaultSorter by="age">Age</mfDefaultSorter>
+                        </th>
+                        <th style="width: 20%">
+                            <mfDefaultSorter by="city">City</mfDefaultSorter>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>Filter by name:</th>
+                        <th colspan="3">
+                            <input class="form-control" [(ngModel)]="filterQuery"/>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of mf.data">
+                        <td>{{item.name}}</td>
+                        <td>{{item.email}}</td>
+                        <td class="text-right">{{item.age}}</td>
+                        <td>{{item.city | uppercase}}</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="4">
+                            <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>

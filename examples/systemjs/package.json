@@ -3,38 +3,34 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "postinstall": "tsd install",
-    "watch": "rm -rf build && mkdir build && tsc -w",
-    "prebuild": "rm -rf build && mkdir build",
-    "build": "tsc",
-    "prestart": "tsc",
-    "start": "lite-server",
-    "tsc": "tsc",
-    "tsd": "tsd install"
+    "prebuild": "rimraf build",
+    "build": "tsc -p app",
+    "prestart": "npm run build",
+    "start": "concurrently \"tsc -p app -w\" \"lite-server\" "
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "lite-server": "^2.1.0",
-    "typescript": "1.8.7",
-    "tsd": "^0.6.5"
+    "concurrently": "^3.1.0",
+    "lite-server": "^2.2.2",
+    "typescript": "^2.0.3",
+    "rimraf": "^2.5.4",
+    "@types/lodash": "^4.14.37"
   },
   "dependencies": {
-    "@angular/common": "~2.0.0",
-    "@angular/compiler": "~2.0.0",
-    "@angular/core": "~2.0.0",
-    "@angular/forms": "~2.0.0",
-    "@angular/http": "~2.0.0",
-    "@angular/platform-browser": "~2.0.0",
-    "@angular/platform-browser-dynamic": "~2.0.0",
-    "@angular/upgrade": "~2.0.0",
-    "angular2-datatable": "0.5.0",
+    "@angular/common": "^2.1.1",
+    "@angular/compiler": "^2.1.1",
+    "@angular/core": "^2.1.1",
+    "@angular/forms": "^2.1.1",
+    "@angular/http": "^2.1.1",
+    "@angular/platform-browser": "^2.1.1",
+    "@angular/platform-browser-dynamic": "^2.1.1",
+    "angular2-datatable": "^0.5.1",
     "bootstrap": "^3.3.7",
     "core-js": "^2.4.1",
-    "lodash": "^4.6.1",
-    "reflect-metadata": "^0.1.8",
-    "rxjs": "5.0.0-beta.12",
-    "systemjs": "0.19.39",
-    "zone.js": "^0.6.25"
+    "lodash": "^4.16.4",
+    "rxjs": "^5.0.0-beta.12",
+    "systemjs": "0.19.40",
+    "zone.js": "^0.6.26"
   }
 }
