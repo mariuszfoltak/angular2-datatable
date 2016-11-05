@@ -1,8 +1,10 @@
+///<reference path="../node_modules/@types/jasmine/index.d.ts"/>
 import {SimpleChange} from "@angular/core";
-import {DataTable} from "./DataTable";
+import {DataTable, PageEvent} from "./DataTable";
+import {TestScheduler} from "rxjs/Rx";
 
 describe("DataTable directive tests", ()=> {
-    let datatable: DataTable;
+    let datatable:DataTable;
 
     beforeEach(()=> {
         datatable = new DataTable();
@@ -81,6 +83,24 @@ describe("DataTable directive tests", ()=> {
             datatable.ngDoCheck();
             expect(datatable.data).toEqual([{id: 5, name: 'Ðrone'}, {id: 4, name: 'Ananas'}]);
         });
+
+        it("should change rowsOnPage when mfRowsOnPage changed", (done)=> {
+            datatable.rowsOnPage = 2;
+            datatable.ngDoCheck();
+            expect(datatable.data).toEqual([{id: 3, name: 'banana'}, {id: 1, name: 'Duck'}]);
+
+            datatable.onPageChange.subscribe((pageOptions:PageEvent)=> {
+                expect(pageOptions.rowsOnPage).toEqual(3);
+                done();
+            });
+
+            datatable.rowsOnPage = 3;
+            datatable.ngOnChanges({rowsOnPage: new SimpleChange(2, 3)});
+            datatable.ngDoCheck();
+            expect(datatable.data).toEqual([{id: 3, name: 'banana'}, {id: 1, name: 'Duck'}, {id: 2, name: 'ącki'}]);
+
+
+        });
     });
 
     describe("sorting", ()=> {
@@ -144,24 +164,24 @@ describe("DataTable directive tests", ()=> {
             ]);
         });
 
-        it("should sort data by child property value", ()=>{
+        it("should sort data by child property value", ()=> {
             let newData = [
-                {name: 'Claire', city: { zip: '51111'}},
-                {name: 'Anna', city: { zip: '31111'}},
-                {name: 'Claire', city: { zip: '41111'}},
-                {name: 'Claire', city: { zip: '11111'}},
-                {name: 'Anna', city: { zip: '21111'}}
+                {name: 'Claire', city: {zip: '51111'}},
+                {name: 'Anna', city: {zip: '31111'}},
+                {name: 'Claire', city: {zip: '41111'}},
+                {name: 'Claire', city: {zip: '11111'}},
+                {name: 'Anna', city: {zip: '21111'}}
             ];
             datatable.ngOnChanges({inputData: new SimpleChange(datatable.inputData, newData)});
             datatable.setSort("city.zip", "asc");
             datatable.ngDoCheck();
 
             expect(datatable.data).toEqual([
-                {name: 'Claire', city: { zip: '11111'}},
-                {name: 'Anna', city: { zip: '21111'}},
-                {name: 'Anna', city: { zip: '31111'}},
-                {name: 'Claire', city: { zip: '41111'}},
-                {name: 'Claire', city: { zip: '51111'}},
+                {name: 'Claire', city: {zip: '11111'}},
+                {name: 'Anna', city: {zip: '21111'}},
+                {name: 'Anna', city: {zip: '31111'}},
+                {name: 'Claire', city: {zip: '41111'}},
+                {name: 'Claire', city: {zip: '51111'}},
             ]);
         });
     });

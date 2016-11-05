@@ -10,6 +10,7 @@ export class AppComponent implements OnInit {
 
     public data;
     public filterQuery = "";
+    public rowsOnPage = 10;
 
     constructor(private http: Http) {
     }
@@ -28,7 +29,7 @@ export class AppComponent implements OnInit {
     }
 
     public sortByWordLength = (a: any) => {
-        return a.name.length;
+        return a.city.length;
     }
 
 }

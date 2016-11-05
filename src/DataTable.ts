@@ -63,7 +63,7 @@ export class DataTable implements OnChanges, DoCheck {
             this.onPageChange.emit({
                 activePage: this.activePage,
                 rowsOnPage: this.rowsOnPage,
-                dataLength: this.inputData.length
+                dataLength: this.inputData ? this.inputData.length : 0
             });
         }
     }
@@ -81,6 +81,11 @@ export class DataTable implements OnChanges, DoCheck {
     }
 
     public ngOnChanges(changes: {[key: string]: SimpleChange}): any {
+        if(changes["rowsOnPage"]) {
+            this.rowsOnPage = changes["rowsOnPage"].previousValue;
+            this.setPage(this.activePage, changes["rowsOnPage"].currentValue);
+            this.mustRecalculateData = true;
+        }
         if (changes["inputData"]) {
             this.inputData = changes["inputData"].currentValue || [];
             this.recalculatePage();
