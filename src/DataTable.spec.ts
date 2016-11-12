@@ -1,13 +1,26 @@
 ///<reference path="../node_modules/@types/jasmine/index.d.ts"/>
-import {SimpleChange} from "@angular/core";
+import {SimpleChange, Component} from "@angular/core";
 import {DataTable, PageEvent} from "./DataTable";
-import {TestScheduler} from "rxjs/Rx";
+import {TestBed, ComponentFixture} from "@angular/core/testing";
+import {By} from "@angular/platform-browser";
+
+@Component({
+    template: `<table [mfData]="[]"></table>`
+})
+class TestComponent {
+}
 
 describe("DataTable directive tests", ()=> {
-    let datatable:DataTable;
+    let datatable: DataTable;
+    let datatableFixture: ComponentFixture<DataTable>;
 
     beforeEach(()=> {
-        datatable = new DataTable();
+        TestBed.configureTestingModule({
+            declarations: [DataTable, TestComponent]
+        });
+        let fixture = TestBed.createComponent(TestComponent);
+        datatable = fixture.debugElement.query(By.directive(DataTable)).injector.get(DataTable) as DataTable;
+
         datatable.inputData = [
             {id: 3, name: 'banana'},
             {id: 1, name: 'Duck'},
@@ -21,7 +34,6 @@ describe("DataTable directive tests", ()=> {
     describe("initializing", ()=> {
 
         it("data should be empty array if inputData is undefined or null", () => {
-            let datatable = new DataTable();
             datatable.ngOnChanges({inputData: new SimpleChange(null, null)});
             datatable.ngDoCheck();
             expect(datatable.data).toEqual([]);
@@ -89,7 +101,7 @@ describe("DataTable directive tests", ()=> {
             datatable.ngDoCheck();
             expect(datatable.data).toEqual([{id: 3, name: 'banana'}, {id: 1, name: 'Duck'}]);
 
-            datatable.onPageChange.subscribe((pageOptions:PageEvent)=> {
+            datatable.onPageChange.subscribe((pageOptions: PageEvent)=> {
                 expect(pageOptions.rowsOnPage).toEqual(3);
                 done();
             });
@@ -187,14 +199,73 @@ describe("DataTable directive tests", ()=> {
     });
 
     describe("data change", ()=> {
-        it("should change data", ()=> {
+        it("should refresh data when inputData change", ()=> {
             let newData = [{id: 5, name: 'Ðrone'}, {id: 4, name: 'Ananas'}];
             datatable.ngOnChanges({inputData: new SimpleChange(datatable.inputData, newData)});
             datatable.ngDoCheck();
             expect(datatable.data).toEqual([{id: 5, name: 'Ðrone'}, {id: 4, name: 'Ananas'}]);
         });
 
-        it("should change page when no data on current page", ()=> {
+        it("should refresh data when rows removed from inputData", ()=> {
+            datatable.ngDoCheck();
+            expect(datatable.data).toEqual(datatable.inputData);
+            datatable.inputData.pop();
+            datatable.ngDoCheck();
+            expect(datatable.data).toEqual(datatable.inputData);
+        });
+
+        it("should refresh data when rows added to inputData", ()=> {
+            datatable.ngDoCheck();
+            expect(datatable.data).toEqual(datatable.inputData);
+            datatable.inputData.push({id: 6, name: 'Furby'});
+            datatable.ngDoCheck();
+            expect(datatable.data).toEqual(datatable.inputData);
+        });
+
+        it("should fire onPageChange event after inputData change", (done)=> {
+            datatable.setPage(2, 2);
+            datatable.ngDoCheck();
+
+            datatable.onPageChange.subscribe((opt: PageEvent)=> {
+                expect(opt.activePage).toEqual(1);
+                expect(opt.dataLength).toEqual(2);
+                expect(opt.rowsOnPage).toEqual(2);
+                done();
+            });
+            let newData = [{id: 5, name: 'Ðrone'}, {id: 4, name: 'Ananas'}];
+            datatable.ngOnChanges({inputData: new SimpleChange(datatable.inputData, newData)});
+            datatable.ngDoCheck();
+        });
+
+        it("should fire onPageChange event after rows added", (done)=> {
+            datatable.setPage(2, 2);
+            datatable.ngDoCheck();
+
+            datatable.onPageChange.subscribe((opt: PageEvent)=> {
+                expect(opt.activePage).toEqual(2);
+                expect(opt.dataLength).toEqual(6);
+                expect(opt.rowsOnPage).toEqual(2);
+                done();
+            });
+            datatable.inputData.push({id: 6, name: 'Furby'});
+            datatable.ngDoCheck();
+        });
+
+        it("should fire onPageChange event after rows removed", (done)=> {
+            datatable.setPage(2, 2);
+            datatable.ngDoCheck();
+
+            datatable.onPageChange.subscribe((opt: PageEvent)=> {
+                expect(opt.activePage).toEqual(1);
+                expect(opt.dataLength).toEqual(2);
+                expect(opt.rowsOnPage).toEqual(2);
+                done();
+            });
+            _.times(3, ()=>datatable.inputData.pop());
+            datatable.ngDoCheck();
+        });
+
+        it("should change page when no data on current page after changed inputData", ()=> {
             datatable.setPage(2, 2);
             datatable.ngDoCheck();
 
@@ -204,12 +275,44 @@ describe("DataTable directive tests", ()=> {
             expect(datatable.data).toEqual(newData);
         });
 
-        it("shouldn't change page when can display data", ()=> {
+        it("should change page when no data on current page after rows removed", ()=> {
+            datatable.setPage(2, 2);
+            datatable.ngDoCheck();
+            expect(datatable.data).toEqual([{id: 2, name: 'ącki'}, {id: 5, name: 'Ðrone'}]);
+
+            datatable.inputData.pop();
+            datatable.inputData.pop();
+            datatable.inputData.pop();
+            datatable.ngDoCheck();
+            expect(datatable.data).toEqual([{id: 3, name: 'banana'}, {id: 1, name: 'Duck'}]);
+        });
+
+        it("shouldn't change page when can display data after data changed", ()=> {
             datatable.setPage(2, 1);
             datatable.ngDoCheck();
 
             let newData = [{id: 5, name: 'Ðrone'}, {id: 1, name: 'Duck'}, {id: 4, name: 'Ananas'}];
             datatable.ngOnChanges({inputData: new SimpleChange(datatable.inputData, newData)});
+            datatable.ngDoCheck();
+            expect(datatable.data).toEqual([{id: 1, name: 'Duck'}]);
+        });
+
+        it("shouldn't change page when can display data after rows removed", ()=> {
+            datatable.setPage(2, 1);
+            datatable.ngDoCheck();
+            expect(datatable.data).toEqual([{id: 1, name: 'Duck'}]);
+
+            datatable.inputData.pop();
+            datatable.ngDoCheck();
+            expect(datatable.data).toEqual([{id: 1, name: 'Duck'}]);
+        });
+
+        it("shouldn't change page when can display data after rows added", ()=> {
+            datatable.setPage(2, 1);
+            datatable.ngDoCheck();
+            expect(datatable.data).toEqual([{id: 1, name: 'Duck'}]);
+
+            datatable.inputData.push({id: 6, name: 'Furby'});
             datatable.ngDoCheck();
             expect(datatable.data).toEqual([{id: 1, name: 'Duck'}]);
         });
@@ -221,6 +324,16 @@ describe("DataTable directive tests", ()=> {
             let newData = [];
             datatable.ngOnChanges({inputData: new SimpleChange(datatable.inputData, newData)});
             datatable.ngDoCheck();
+            expect(datatable.activePage).toEqual(1);
+        });
+
+        it("shouldn't change page to 0 when data is empty after removed rows", ()=> {
+            datatable.setPage(2, 1);
+            datatable.ngDoCheck();
+
+            _.times(5, ()=>datatable.inputData.pop());
+            datatable.ngDoCheck();
+            expect(datatable.inputData.length).toEqual(0);
             expect(datatable.activePage).toEqual(1);
         });
     });

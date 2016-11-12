@@ -1,4 +1,7 @@
-import {Directive, Input, EventEmitter, SimpleChange, OnChanges, DoCheck} from "@angular/core";
+import {
+    Directive, Input, EventEmitter, SimpleChange, OnChanges, DoCheck, IterableDiffers,
+    IterableDiffer
+} from "@angular/core";
 import * as _ from "lodash";
 
 export interface SortEvent {
@@ -26,6 +29,7 @@ export class DataTable implements OnChanges, DoCheck {
 
     private sortBy: string|string[] = "";
     private sortOrder = "asc";
+    private diff: IterableDiffer;
 
     @Input("mfRowsOnPage") public rowsOnPage = 1000;
     @Input("mfActivePage") public activePage = 1;
@@ -34,9 +38,12 @@ export class DataTable implements OnChanges, DoCheck {
 
     public data: any[];
 
-    public onDataChange = new EventEmitter<DataEvent>();
     public onSortChange = new EventEmitter<SortEvent>();
     public onPageChange = new EventEmitter<PageEvent>();
+
+    public constructor(private differs: IterableDiffers) {
+        this.diff = differs.find([]).create(null);
+    }
 
     public getSort(): SortEvent {
         return {sortBy: this.sortBy, sortOrder: this.sortOrder};
@@ -78,6 +85,12 @@ export class DataTable implements OnChanges, DoCheck {
         let lastPage = Math.ceil(this.inputData.length / this.rowsOnPage);
         this.activePage = lastPage < this.activePage ? lastPage : this.activePage;
         this.activePage = this.activePage || 1;
+
+        this.onPageChange.emit({
+            activePage: this.activePage,
+            rowsOnPage: this.rowsOnPage,
+            dataLength: this.inputData.length
+        });
     }
 
     public ngOnChanges(changes: {[key: string]: SimpleChange}): any {
@@ -89,16 +102,16 @@ export class DataTable implements OnChanges, DoCheck {
         if (changes["inputData"]) {
             this.inputData = changes["inputData"].currentValue || [];
             this.recalculatePage();
-            this.onPageChange.emit({
-                activePage: this.activePage,
-                rowsOnPage: this.rowsOnPage,
-                dataLength: this.inputData.length
-            });
             this.mustRecalculateData = true;
         }
     }
 
     public ngDoCheck(): any {
+        let changes = this.diff.diff(this.inputData);
+        if(changes) {
+            this.recalculatePage();
+            this.mustRecalculateData = true;
+        }
         if (this.mustRecalculateData) {
             this.fillData();
             this.mustRecalculateData = false;

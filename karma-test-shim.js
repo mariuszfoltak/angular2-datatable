@@ -66,7 +66,8 @@ function initTestBed() {
 
             coreTesting.TestBed.initTestEnvironment(
                 browserTesting.BrowserDynamicTestingModule,
-                browserTesting.platformBrowserDynamicTesting());
+                browserTesting.platformBrowserDynamicTesting()
+            );
         })
 }
 

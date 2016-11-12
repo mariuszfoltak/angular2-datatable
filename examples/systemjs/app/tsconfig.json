@@ -15,6 +15,10 @@
     "lib": [
       "dom",
       "es2015"
-    ]
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "angular2-datatable": ["../../.."]
+    }
   }
 }

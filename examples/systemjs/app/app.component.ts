@@ -8,7 +8,7 @@ import {Http} from "@angular/http";
 })
 export class AppComponent implements OnInit {
 
-    public data;
+    public data: any[];
     public filterQuery = "";
     public rowsOnPage = 10;
 
@@ -30,6 +30,13 @@ export class AppComponent implements OnInit {
 
     public sortByWordLength = (a: any) => {
         return a.city.length;
+    }
+
+    public remove(item) {
+        let index = this.data.indexOf(item);
+        if(index>-1) {
+            this.data.splice(index, 1);
+        }
     }
 
 }
