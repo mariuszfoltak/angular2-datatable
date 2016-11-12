@@ -3,6 +3,7 @@ import {SimpleChange, Component} from "@angular/core";
 import {DataTable, PageEvent} from "./DataTable";
 import {TestBed, ComponentFixture} from "@angular/core/testing";
 import {By} from "@angular/platform-browser";
+import * as _ from "lodash";
 
 @Component({
     template: `<table [mfData]="[]"></table>`
