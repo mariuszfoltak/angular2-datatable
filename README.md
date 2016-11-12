@@ -7,7 +7,7 @@
 
 ## Demo
 
-Check [live demo](http://plnkr.co/edit/tINlfy?p=preview) in plunker
+Check [live demo](http://plnkr.co/edit/PxBaZs?p=preview) in plunker
 
 ## Installation
 
