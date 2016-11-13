@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.5.2 (2016-11-13)
+
+Changes:
+    
+    - added inputs/outputs for sorting (#14)
+    
+Bugfixes:
+
+    - detect changes in inputData array (#10)
+    - fixed detecting changes in mfRowsOnPage (#32)
+    - fixed support for AOT compilation
+
 ## 0.5.1 (2016-10-25)
 
 Changes:

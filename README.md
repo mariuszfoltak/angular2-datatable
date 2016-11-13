@@ -79,9 +79,14 @@ AppComponent.html
  - selector: `table[mfData]`
  - exportAs: `mfDataTable`
  - inputs
-   - `mfData: any[]` - array of data to display on table
+   - `mfData: any[]` - array of data to display in table
    - `mfRowsOnPage: number` - number of rows should be displayed on page (default: 1000)
-   - `mfActivePage: number` - page number should be displayed on init (default: 1)
+   - `mfActivePage: number` - page number (default: 1)
+   - `mfSortBy: any` - sort by parameter
+   - `mfSortOrder: string` - sort order parameter, "asc" or "desc"
+ - outputs
+   - `mfSortByChange: any` - sort by parameter
+   - `mfSortOrderChange: any` - sort order parameter
  
 ### `mfDefaultSorter` component
 
