@@ -1,5 +1,5 @@
-<div class="container">
-    <div class="col-xs-8 col-md-offset-2">
+<div class="container-fluid">
+    <div class="col-xs-12 col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
 
         <div class="page-header">
             <h1>
@@ -10,58 +10,85 @@
 
 
         <div class="row">
-            <h2 class="col-xs-8">Simple data table</h2>
-            <label class="label-control col-xs-2">Rows on page</label>
+            <h2 class="col-xs-6">Simple data table</h2>
             <div class="col-xs-2">
-                <select class="form-control" [(ngModel)]="rowsOnPage">
+                <label class="label-control">Rows on page</label>
+                <select class="form-control input-sm" [(ngModel)]="rowsOnPage">
                     <option [ngValue]="5">5</option>
                     <option [ngValue]="10">10</option>
                     <option [ngValue]="15">15</option>
                 </select>
             </div>
+            <div class="col-xs-4">
+                <div class="row">
+                    <label class="col-xs-12 label-control">Sort by</label>
+                </div>
+                <div class="col-xs-6">
+                    <div class="row">
+                        <select class="form-control input-sm" [(ngModel)]="sortBy">
+                            <option ngValue="name">Name</option>
+                            <option ngValue="email">Email</option>
+                            <option ngValue="age">Age</option>
+                            <option [ngValue]="sortByWordLength">City</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xs-6">
+                    <div class="row">
+                        <select class="form-control input-sm" [(ngModel)]="sortOrder">
+                            <option ngValue="asc">Ascending</option>
+                            <option ngValue="desc">Descending</option>
+                            <option ngValue="badValue">Bad value</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="panel panel-default">
             <div class="panel-heading">User information</div>
 
-            <table class="table table-striped" [mfData]="data | dataFilter : filterQuery" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage">
+            <table class="table table-striped" [mfData]="data | dataFilter : filterQuery" #mf="mfDataTable"
+                   [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
                 <thead>
-                    <tr>
-                        <th style="width: 10%"></th>
-                        <th style="width: 20%">
-                            <mfDefaultSorter by="name">Name</mfDefaultSorter>
-                        </th>
-                        <th style="width: 40%">
-                            <mfDefaultSorter by="email">Email</mfDefaultSorter>
-                        </th>
-                        <th style="width: 10%">
-                            <mfDefaultSorter by="age">Age</mfDefaultSorter>
-                        </th>
-                        <th style="width: 20%">
-                            <mfDefaultSorter [by]="sortByWordLength">City</mfDefaultSorter>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th>Filter by name:</th>
-                        <th colspan="3">
-                            <input class="form-control" [(ngModel)]="filterQuery"/>
-                        </th>
-                    </tr>
+                <tr>
+                    <th style="width: 10%"></th>
+                    <th style="width: 20%">
+                        <mfDefaultSorter by="name">Name</mfDefaultSorter>
+                    </th>
+                    <th style="width: 40%">
+                        <mfDefaultSorter by="email">Email</mfDefaultSorter>
+                    </th>
+                    <th style="width: 10%">
+                        <mfDefaultSorter by="age">Age</mfDefaultSorter>
+                    </th>
+                    <th style="width: 20%">
+                        <mfDefaultSorter [by]="sortByWordLength">City</mfDefaultSorter>
+                    </th>
+                </tr>
+                <tr>
+                    <th colspan="5">
+                        Filter by name:
+                        <input class="form-control" [(ngModel)]="filterQuery"/>
+                    </th>
+                </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let item of mf.data">
-                        <td><button (click)="remove(item)" class="btn btn-danger">x</button></td>
-                        <td>{{item.name}}</td>
-                        <td>{{item.email}}</td>
-                        <td class="text-right">{{item.age}}</td>
-                        <td>{{item.city | uppercase}}</td>
-                    </tr>
+                <tr *ngFor="let item of mf.data">
+                    <td>
+                        <button (click)="remove(item)" class="btn btn-danger">x</button>
+                    </td>
+                    <td>{{item.name}}</td>
+                    <td>{{item.email}}</td>
+                    <td class="text-right">{{item.age}}</td>
+                    <td>{{item.city | uppercase}}</td>
+                </tr>
                 </tbody>
                 <tfoot>
-                    <tr>
-                        <td colspan="5">
-                            <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
-                        </td>
-                    </tr>
+                <tr>
+                    <td colspan="5">
+                        <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+                    </td>
+                </tr>
                 </tfoot>
             </table>
         </div>

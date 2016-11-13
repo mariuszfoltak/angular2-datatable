@@ -1,8 +1,9 @@
 import {
     Directive, Input, EventEmitter, SimpleChange, OnChanges, DoCheck, IterableDiffers,
-    IterableDiffer
+    IterableDiffer, Output
 } from "@angular/core";
 import * as _ from "lodash";
+import {ReplaySubject} from "rxjs/Rx";
 
 export interface SortEvent {
     sortBy: string|string[];
@@ -25,11 +26,13 @@ export interface DataEvent {
 })
 export class DataTable implements OnChanges, DoCheck {
 
+    private diff: IterableDiffer;
     @Input("mfData") public inputData: any[] = [];
 
-    private sortBy: string|string[] = "";
-    private sortOrder = "asc";
-    private diff: IterableDiffer;
+    @Input("mfSortBy") public sortBy: string|string[] = "";
+    @Input("mfSortOrder") public sortOrder = "asc";
+    @Output("mfSortByChange") public sortByChange = new EventEmitter<string|string[]>();
+    @Output("mfSortOrderChange") public sortOrderChange = new EventEmitter<string>();
 
     @Input("mfRowsOnPage") public rowsOnPage = 1000;
     @Input("mfActivePage") public activePage = 1;
@@ -38,7 +41,7 @@ export class DataTable implements OnChanges, DoCheck {
 
     public data: any[];
 
-    public onSortChange = new EventEmitter<SortEvent>();
+    public onSortChange = new ReplaySubject<SortEvent>(1);
     public onPageChange = new EventEmitter<PageEvent>();
 
     public constructor(private differs: IterableDiffers) {
@@ -52,9 +55,11 @@ export class DataTable implements OnChanges, DoCheck {
     public setSort(sortBy: string|string[], sortOrder: string): void {
         if (this.sortBy !== sortBy || this.sortOrder !== sortOrder) {
             this.sortBy = sortBy;
-            this.sortOrder = sortOrder;
+            this.sortOrder = _.includes(["asc","desc"], sortOrder) ? sortOrder : "asc";
             this.mustRecalculateData = true;
-            this.onSortChange.emit({sortBy: sortBy, sortOrder: sortOrder});
+            this.onSortChange.next({sortBy: sortBy, sortOrder: sortOrder});
+            this.sortByChange.emit(this.sortBy);
+            this.sortOrderChange.emit(this.sortOrder);
         }
     }
 
@@ -94,9 +99,19 @@ export class DataTable implements OnChanges, DoCheck {
     }
 
     public ngOnChanges(changes: {[key: string]: SimpleChange}): any {
-        if(changes["rowsOnPage"]) {
+        if (changes["rowsOnPage"]) {
             this.rowsOnPage = changes["rowsOnPage"].previousValue;
             this.setPage(this.activePage, changes["rowsOnPage"].currentValue);
+            this.mustRecalculateData = true;
+        }
+        if (changes["sortBy"] || changes["sortOrder"]) {
+            if (!_.includes(["asc", "desc"], this.sortOrder)) {
+                console.warn("angular2-datatable: value for input mfSortOrder must be one of ['asc', 'desc'], but is:", this.sortOrder);
+                this.sortOrder = "asc";
+            }
+            if (this.sortBy) {
+                this.onSortChange.next({sortBy: this.sortBy, sortOrder: this.sortOrder});
+            }
             this.mustRecalculateData = true;
         }
         if (changes["inputData"]) {
@@ -108,7 +123,7 @@ export class DataTable implements OnChanges, DoCheck {
 
     public ngDoCheck(): any {
         let changes = this.diff.diff(this.inputData);
-        if(changes) {
+        if (changes) {
             this.recalculatePage();
             this.mustRecalculateData = true;
         }
@@ -137,7 +152,7 @@ export class DataTable implements OnChanges, DoCheck {
     private caseInsensitiveIteratee(sortBy: string) {
         return (row: any): any => {
             var value = row;
-            for (let sortByProperty of sortBy.split('.')){
+            for (let sortByProperty of sortBy.split('.')) {
                 value = value[sortByProperty];
             }
             if (value && typeof value === 'string' || value instanceof String) {

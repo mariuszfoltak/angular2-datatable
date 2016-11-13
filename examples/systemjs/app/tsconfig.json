@@ -18,7 +18,8 @@
     ],
     "baseUrl": ".",
     "paths": {
-      "angular2-datatable": ["../../.."]
+      "angular2-datatable": ["../../.."],
+      "angular2-datatable/*": ["../../../*"]
     }
   }
 }

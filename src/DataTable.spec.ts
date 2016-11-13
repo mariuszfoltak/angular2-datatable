@@ -1,6 +1,6 @@
 ///<reference path="../node_modules/@types/jasmine/index.d.ts"/>
 import {SimpleChange, Component} from "@angular/core";
-import {DataTable, PageEvent} from "./DataTable";
+import {DataTable, PageEvent, SortEvent} from "./DataTable";
 import {TestBed, ComponentFixture} from "@angular/core/testing";
 import {By} from "@angular/platform-browser";
 import * as _ from "lodash";
@@ -13,13 +13,13 @@ class TestComponent {
 
 describe("DataTable directive tests", ()=> {
     let datatable: DataTable;
-    let datatableFixture: ComponentFixture<DataTable>;
+    let fixture: ComponentFixture<TestComponent>;
 
     beforeEach(()=> {
         TestBed.configureTestingModule({
             declarations: [DataTable, TestComponent]
         });
-        let fixture = TestBed.createComponent(TestComponent);
+        fixture = TestBed.createComponent(TestComponent);
         datatable = fixture.debugElement.query(By.directive(DataTable)).injector.get(DataTable) as DataTable;
 
         datatable.inputData = [
@@ -122,6 +122,117 @@ describe("DataTable directive tests", ()=> {
             datatable.setSort("id", "desc");
             expect(datatable.getSort()).toEqual({sortBy: "id", sortOrder: "desc"});
         });
+
+        it("should sort data after sorting input value changed", () => {
+            datatable.ngDoCheck();
+            datatable.sortBy = "id";
+            datatable.sortOrder = "asc";
+            datatable.ngOnChanges({
+                sortBy: new SimpleChange(null, datatable.sortBy),
+                sortOrder: new SimpleChange(null, datatable.sortOrder)
+            });
+            datatable.ngDoCheck();
+            expect(datatable.data).toEqual([
+                {id: 1, name: 'Duck'},
+                {id: 2, name: 'ącki'},
+                {id: 3, name: 'banana'},
+                {id: 4, name: 'Ananas'},
+                {id: 5, name: 'Ðrone'}
+            ])
+        });
+
+        it("should fire onSortChange event after sorting input value changed", (done)=> {
+            datatable.onSortChange.subscribe((event: SortEvent)=> {
+                expect(event.sortBy).toEqual("id");
+                expect(event.sortOrder).toEqual("desc");
+                done();
+            });
+            datatable.ngDoCheck();
+            datatable.sortBy = "id";
+            datatable.sortOrder = "desc";
+            datatable.ngOnChanges({
+                sortBy: new SimpleChange(null, datatable.sortBy),
+                sortOrder: new SimpleChange(null, datatable.sortOrder)
+            });
+            datatable.ngDoCheck();
+
+        });
+
+        it("should set sortOrder to 'asc' if not provided", (done)=> {
+            datatable.onSortChange.subscribe((event: SortEvent)=> {
+                expect(event.sortBy).toEqual("id");
+                expect(event.sortOrder).toEqual("asc");
+                done();
+            });
+            datatable.ngDoCheck();
+            datatable.sortBy = "id";
+            datatable.ngOnChanges({
+                sortBy: new SimpleChange(null, datatable.sortBy)
+            });
+            datatable.ngDoCheck();
+            expect(datatable.sortOrder).toEqual("asc");
+        });
+
+        it("should set sortOrder to 'asc' if provided something else than 'asc' or 'desc'", (done)=> {
+            datatable.onSortChange.subscribe((event: SortEvent)=> {
+                expect(event.sortBy).toEqual("id");
+                expect(event.sortOrder).toEqual("asc");
+                done();
+            });
+            datatable.ngDoCheck();
+            datatable.sortBy = "id";
+            datatable.sortOrder = "bulb";
+            datatable.ngOnChanges({
+                sortBy: new SimpleChange(null, datatable.sortBy),
+                sortOrder: new SimpleChange(null, datatable.sortOrder)
+            });
+            datatable.ngDoCheck();
+            expect(datatable.sortOrder).toEqual("asc");
+            expect(datatable.data).toEqual([
+                {id: 1, name: 'Duck'},
+                {id: 2, name: 'ącki'},
+                {id: 3, name: 'banana'},
+                {id: 4, name: 'Ananas'},
+                {id: 5, name: 'Ðrone'}
+            ]);
+        });
+
+        it("shouldn't change order when only order provided", (done)=> {
+            done();
+            datatable.onSortChange.subscribe(()=> {
+                done.fail("OnSortChange shouldn't been fired");
+            });
+            datatable.ngDoCheck();
+            datatable.sortOrder = "desc";
+            datatable.ngOnChanges({sortOrder: new SimpleChange(null, datatable.sortOrder)});
+            datatable.ngDoCheck();
+            expect(datatable.data).toEqual(datatable.inputData);
+        });
+
+        it("should call output event when sorting changed", (done)=> {
+            datatable.ngDoCheck();
+            datatable.sortByChange.switchMap((sortBy: string)=> {
+                expect(sortBy).toEqual("id");
+                return datatable.sortOrderChange;
+            }).subscribe((sortOrder: string)=> {
+                expect(sortOrder).toEqual("desc");
+                done();
+            });
+
+            datatable.setSort("id", "desc");
+        });
+
+        it("shouldn't call output event when sortOrder fixed", (done)=> {
+            datatable.ngDoCheck();
+            datatable.sortOrderChange.subscribe(()=> {
+                done.fail("Shouldn't call sortOrderChange");
+            });
+            done();
+            datatable.sortOrder = "bulb";
+            datatable.ngOnChanges({sortOrder: new SimpleChange(null, datatable.sortOrder)});
+            datatable.ngDoCheck();
+        });
+        // Wywołanie outputa gdy zmiana z innej strony
 
         it("shouldn't refresh data when set page with same settings", ()=> {
             datatable.setSort("name", "asc");

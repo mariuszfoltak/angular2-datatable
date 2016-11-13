@@ -11,6 +11,8 @@ export class AppComponent implements OnInit {
     public data: any[];
     public filterQuery = "";
     public rowsOnPage = 10;
+    public sortBy = "email";
+    public sortOrder = "asc";
 
     constructor(private http: Http) {
     }
