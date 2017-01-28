@@ -41,7 +41,7 @@ import * as _ from "lodash";
                 <a class="page-link" style="cursor: pointer">&raquo;</a>
             </li>
         </ul>
-        <ul class="pagination pull-right" *ngIf="p.dataLength > minRowsOnPage">
+        <ul class="pagination pull-right float-sm-right" *ngIf="p.dataLength > minRowsOnPage">
             <li class="page-item" *ngFor="let rows of rowsOnPageSet" [class.active]="p.rowsOnPage===rows" (click)="p.setRowsOnPage(rows)">
                 <a class="page-link" style="cursor: pointer">{{rows}}</a>
             </li>
