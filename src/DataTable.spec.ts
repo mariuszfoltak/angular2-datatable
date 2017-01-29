@@ -291,8 +291,9 @@ describe("DataTable directive tests", ()=> {
         it("should sort data by child property value", ()=> {
             let newData = [
                 {name: 'Claire', city: {zip: '51111'}},
-                {name: 'Anna', city: {zip: '31111'}},
+                {name: 'Anna'},
                 {name: 'Claire', city: {zip: '41111'}},
+                {name: 'Donald', city: 2},
                 {name: 'Claire', city: {zip: '11111'}},
                 {name: 'Anna', city: {zip: '21111'}}
             ];
@@ -303,9 +304,10 @@ describe("DataTable directive tests", ()=> {
             expect(datatable.data).toEqual([
                 {name: 'Claire', city: {zip: '11111'}},
                 {name: 'Anna', city: {zip: '21111'}},
-                {name: 'Anna', city: {zip: '31111'}},
                 {name: 'Claire', city: {zip: '41111'}},
                 {name: 'Claire', city: {zip: '51111'}},
+                {name: 'Anna'},
+                {name: 'Donald', city: 2},
             ]);
         });
     });

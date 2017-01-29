@@ -153,7 +153,9 @@ export class DataTable implements OnChanges, DoCheck {
         return (row: any): any => {
             var value = row;
             for (let sortByProperty of sortBy.split('.')) {
-                value = value[sortByProperty];
+                if(value) {
+                    value = value[sortByProperty];
+                }
             }
             if (value && typeof value === 'string' || value instanceof String) {
                 return value.toLowerCase();
