@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.6.0 (2017-03-27)
+
+Fixes:
+
+    - fix AOT incompatibility, changing @angular dependencies to peerDependencies, thanks to @trevex (#91)
+
 ## 0.5.2 (2016-11-13)
 
 Changes:
