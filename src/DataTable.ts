@@ -17,7 +17,7 @@ export interface PageEvent {
 }
 
 export interface DataEvent {
-    length: number;
+    currentData: any[];
 }
 
 @Directive({
@@ -43,6 +43,7 @@ export class DataTable implements OnChanges, DoCheck {
 
     public onSortChange = new ReplaySubject<SortEvent>(1);
     public onPageChange = new EventEmitter<PageEvent>();
+    public onDataFilled = new EventEmitter<DataEvent>();
 
     public constructor(private differs: IterableDiffers) {
         this.diff = differs.find([]).create(null);
@@ -147,6 +148,9 @@ export class DataTable implements OnChanges, DoCheck {
         }
         data = _.slice(data, offset, offset + this.rowsOnPage);
         this.data = data;
+        this.onDataFilled.emit({
+            currentData: data
+        });
     }
 
     private caseInsensitiveIteratee(sortBy: string) {
