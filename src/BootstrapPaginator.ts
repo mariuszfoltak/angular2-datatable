@@ -6,6 +6,11 @@ import * as _ from "lodash";
     selector: "mfBootstrapPaginator",
     template: `
     <mfPaginator #p [mfTable]="mfTable">
+        <ul class="pagination pull-right float-sm-right" *ngIf="p.dataLength > minRowsOnPage">
+            <li class="page-item" *ngFor="let rows of rowsOnPageSet" [class.active]="p.rowsOnPage===rows" (click)="p.setRowsOnPage(rows)">
+                <a class="page-link" style="cursor: pointer">{{rows}}</a>
+            </li>
+        </ul>
         <ul class="pagination" *ngIf="p.dataLength > p.rowsOnPage">
             <li class="page-item" [class.disabled]="p.activePage <= 1" (click)="p.setPage(1)">
                 <a class="page-link" style="cursor: pointer">&laquo;</a>
@@ -39,11 +44,6 @@ import * as _ from "lodash";
             </li>
             <li class="page-item" [class.disabled]="p.activePage >= p.lastPage" (click)="p.setPage(p.lastPage)">
                 <a class="page-link" style="cursor: pointer">&raquo;</a>
-            </li>
-        </ul>
-        <ul class="pagination pull-right float-sm-right" *ngIf="p.dataLength > minRowsOnPage">
-            <li class="page-item" *ngFor="let rows of rowsOnPageSet" [class.active]="p.rowsOnPage===rows" (click)="p.setRowsOnPage(rows)">
-                <a class="page-link" style="cursor: pointer">{{rows}}</a>
             </li>
         </ul>
     </mfPaginator>
