@@ -68,13 +68,6 @@ module.exports = function (config) {
                 watched: false
             },
 
-            // Lodash
-            {
-                pattern: 'node_modules/lodash/lodash.js',
-                included: false,
-                watched: false
-            },
-
             // The testing library
             {
                 pattern: 'systemjs.config.js',

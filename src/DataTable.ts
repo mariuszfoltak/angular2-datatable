@@ -2,12 +2,11 @@ import {
     Directive, Input, EventEmitter, SimpleChange, OnChanges, DoCheck, IterableDiffers,
     IterableDiffer, Output
 } from "@angular/core";
-import * as _ from "lodash";
-import {ReplaySubject} from "rxjs/Rx";
+import { ReplaySubject } from "rxjs";
 
 export interface SortEvent {
     sortBy: string|string[];
-    sortOrder: string
+    sortOrder: SortOrder
 }
 
 export interface PageEvent {
@@ -20,17 +19,19 @@ export interface DataEvent {
     length: number;
 }
 
+export type SortOrder = "asc" | "desc";
+
 @Directive({
-    selector: 'table[mfData]',
-    exportAs: 'mfDataTable'
+    selector: "table[mfData]",
+    exportAs: "mfDataTable"
 })
 export class DataTable implements OnChanges, DoCheck {
 
-    private diff: IterableDiffer;
+    private diff: IterableDiffer<any>;
     @Input("mfData") public inputData: any[] = [];
 
     @Input("mfSortBy") public sortBy: string|string[] = "";
-    @Input("mfSortOrder") public sortOrder = "asc";
+    @Input("mfSortOrder") public sortOrder: SortOrder = "asc";
     @Output("mfSortByChange") public sortByChange = new EventEmitter<string|string[]>();
     @Output("mfSortOrderChange") public sortOrderChange = new EventEmitter<string>();
 
@@ -52,12 +53,12 @@ export class DataTable implements OnChanges, DoCheck {
         return {sortBy: this.sortBy, sortOrder: this.sortOrder};
     }
 
-    public setSort(sortBy: string|string[], sortOrder: string): void {
+    public setSort(sortBy: string|string[], sortOrder: SortOrder): void {
         if (this.sortBy !== sortBy || this.sortOrder !== sortOrder) {
             this.sortBy = sortBy;
-            this.sortOrder = _.includes(["asc","desc"], sortOrder) ? sortOrder : "asc";
+            this.sortOrder = ["asc","desc"].indexOf(sortOrder) >= 0 ? sortOrder : "asc";
             this.mustRecalculateData = true;
-            this.onSortChange.next({sortBy: sortBy, sortOrder: sortOrder});
+            this.onSortChange.next({sortBy: this.sortBy, sortOrder: this.sortOrder});
             this.sortByChange.emit(this.sortBy);
             this.sortOrderChange.emit(this.sortOrder);
         }
@@ -81,13 +82,13 @@ export class DataTable implements OnChanges, DoCheck {
     }
 
     private calculateNewActivePage(previousRowsOnPage: number, currentRowsOnPage: number): number {
-        let firstRowOnPage = (this.activePage - 1) * previousRowsOnPage + 1;
-        let newActivePage = Math.ceil(firstRowOnPage / currentRowsOnPage);
+        const firstRowOnPage = (this.activePage - 1) * previousRowsOnPage + 1;
+        const newActivePage = Math.ceil(firstRowOnPage / currentRowsOnPage);
         return newActivePage;
     }
 
     private recalculatePage() {
-        let lastPage = Math.ceil(this.inputData.length / this.rowsOnPage);
+        const lastPage = Math.ceil(this.inputData.length / this.rowsOnPage);
         this.activePage = lastPage < this.activePage ? lastPage : this.activePage;
         this.activePage = this.activePage || 1;
 
@@ -105,7 +106,7 @@ export class DataTable implements OnChanges, DoCheck {
             this.mustRecalculateData = true;
         }
         if (changes["sortBy"] || changes["sortOrder"]) {
-            if (!_.includes(["asc", "desc"], this.sortOrder)) {
+            if (["asc", "desc"].indexOf(this.sortOrder) < 0) {
                 console.warn("angular2-datatable: value for input mfSortOrder must be one of ['asc', 'desc'], but is:", this.sortOrder);
                 this.sortOrder = "asc";
             }
@@ -122,7 +123,7 @@ export class DataTable implements OnChanges, DoCheck {
     }
 
     public ngDoCheck(): any {
-        let changes = this.diff.diff(this.inputData);
+        const changes = this.diff.diff(this.inputData);
         if (changes) {
             this.recalculatePage();
             this.mustRecalculateData = true;
@@ -134,33 +135,51 @@ export class DataTable implements OnChanges, DoCheck {
     }
 
     private fillData(): void {
-        this.activePage = this.activePage;
-        this.rowsOnPage = this.rowsOnPage;
-
-        let offset = (this.activePage - 1) * this.rowsOnPage;
+        const offset = (this.activePage - 1) * this.rowsOnPage;
         let data = this.inputData;
-        var sortBy = this.sortBy;
-        if (typeof sortBy === 'string' || sortBy instanceof String) {
-            data = _.orderBy(data, this.caseInsensitiveIteratee(<string>sortBy), [this.sortOrder]);
-        } else {
-            data = _.orderBy(data, sortBy, [this.sortOrder]);
-        }
-        data = _.slice(data, offset, offset + this.rowsOnPage);
+        data = [...data].sort(this.sorter(this.sortBy, this.sortOrder));
+        data = data.slice(offset, offset + this.rowsOnPage);
         this.data = data;
     }
 
     private caseInsensitiveIteratee(sortBy: string) {
         return (row: any): any => {
-            var value = row;
-            for (let sortByProperty of sortBy.split('.')) {
-                if(value) {
+            let value = row;
+            for (const sortByProperty of sortBy.split(".")) {
+                if (value) {
                     value = value[sortByProperty];
                 }
             }
-            if (value && typeof value === 'string' || value instanceof String) {
+            if (value && typeof value === "string" || value instanceof String) {
                 return value.toLowerCase();
             }
             return value;
         };
     }
+
+    private compare(left: any, right: any): number {
+        return left === right ? 0 : left == null || left > right ? 1 : -1;
+    }
+
+    private sorter<T>(sortBy: string | string[], sortOrder: string): (left: T, right: T) => number {
+        const order = sortOrder === "desc" ? -1 : 1;
+        if (typeof sortBy === "string" || sortBy instanceof String) {
+            const iteratee = this.caseInsensitiveIteratee(sortBy as string);
+            return (left, right) => {
+                return this.compare(iteratee(left), iteratee(right)) * order;
+            };
+        } else {
+            const iteratees = sortBy.map(entry => this.caseInsensitiveIteratee(entry));
+            return (left, right) => {
+                for (const iteratee of iteratees) {
+                    const comparison = this.compare(iteratee(left), iteratee(right)) * order;
+                    if (comparison !== 0) {
+                        return comparison;
+                    }
+                }
+                return 0;
+            };
+        }
+    }
+
 }
