@@ -145,7 +145,7 @@ export class DataTable implements OnChanges, DoCheck {
         } else {
             data = _.orderBy(data, sortBy, [this.sortOrder]);
         }
-        data = _.slice(data, offset, offset + this.rowsOnPage);
+        data = _.slice(data, offset, offset + parseInt(this.rowsOnPage.toString()));
         this.data = data;
     }
 
