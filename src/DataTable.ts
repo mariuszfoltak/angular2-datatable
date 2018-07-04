@@ -3,7 +3,7 @@ import {
     IterableDiffer, Output
 } from "@angular/core";
 import * as _ from "lodash";
-import {ReplaySubject} from "rxjs/Rx";
+import {ReplaySubject} from "rxjs";
 
 export interface SortEvent {
     sortBy: string|string[];
