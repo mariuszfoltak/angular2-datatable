@@ -1,4 +1,10 @@
 # Changelog
+## 1.0.0 (2018-07-04)
+
+Breaking Changes:
+
+    - Updated to require rsjx v6.2.1+ as a peer dependency
+
 
 ## 0.6.0 (2017-03-27)
 
