@@ -1,6 +1,5 @@
 import {Component, Input, OnChanges} from "@angular/core";
 import {DataTable} from "./DataTable";
-import * as _ from "lodash";
 
 @Component({
     selector: "mfBootstrapPaginator",
@@ -57,7 +56,7 @@ export class BootstrapPaginator implements OnChanges {
 
     ngOnChanges(changes: any): any {
         if (changes.rowsOnPageSet) {
-            this.minRowsOnPage = _.min(this.rowsOnPageSet)
+            this.minRowsOnPage = this.rowsOnPageSet.reduce((previous, current) => current < previous ? current : previous);
         }
     }
 }

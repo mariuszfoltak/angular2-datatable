@@ -1,6 +1,6 @@
 {
   "name": "angular2-datatable",
-  "version": "0.6.0",
+  "version": "2.0.0",
   "description": "DataTable component for Angular2 framework",
   "main": "index.js",
   "scripts": {
@@ -19,8 +19,7 @@
   },
   "keywords": [
     "angular",
-    "angularjs",
-    "angular2",
+    "angular6",
     "ng",
     "ng2",
     "table",
@@ -35,12 +34,13 @@
   },
   "homepage": "https://github.com/mariuszfoltak/angular2-datatable#readme",
   "devDependencies": {
-    "@angular/core": "^2.1.0",
-    "@angular/compiler": "^2.1.0",
-    "@angular/common": "^2.1.0",
-    "@angular/platform-browser": "^2.1.0",
-    "@angular/platform-browser-dynamic": "^2.1.0",
-    "@angular/compiler-cli": "^2.1.0",
+    "@angular/common": "^6.0.0",
+    "@angular/compiler": "^6.0.0",
+    "@angular/compiler-cli": "^6.0.0",
+    "@angular/core": "^6.0.0",
+    "@angular/platform-browser": "^6.0.0",
+    "@angular/platform-browser-dynamic": "^6.0.0",
+    "@types/jasmine": "^2.5.35",
     "core-js": "^2.4.1",
     "http-server": "^0.9.0",
     "jasmine-core": "^2.4.1",
@@ -49,24 +49,18 @@
     "karma-coverage": "^1.1.1",
     "karma-jasmine": "^1.0.2",
     "karma-phantomjs-launcher": "^1.0.2",
-    "lodash": "^4.0.0",
     "phantomjs-prebuilt": "^2.1.7",
     "remap-istanbul": "^0.7.0",
-    "rxjs": "5.0.0-beta.12",
-    "systemjs": "^0.19.39",
-    "typescript": "~2.1.0",
-    "zone.js": "^0.6.25",
     "rimraf": "^2.5.4",
-    "@types/lodash": "ts2.0",
-    "@types/jasmine": "^2.5.35"
-  },
-  "dependencies": {
-    "lodash": "^4.0.0"
+    "rxjs": "^6.0.0",
+    "systemjs": "^0.19.47",
+    "typescript": "~2.7.2",
+    "zone.js": "^0.6.25"
   },
   "peerDependencies": {
-    "@angular/core": "^2.0.0",
-    "@angular/common": "^2.0.0",
-    "@angular/platform-browser": "^2.0.0",
-    "rxjs": "^5.0.0-beta.12"
+    "@angular/core": "^6.0.0",
+    "@angular/common": "^6.0.0",
+    "@angular/platform-browser": "^6.0.0",
+    "rxjs": "^6.0.0"
   }
 }

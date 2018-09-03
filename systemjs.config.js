@@ -22,7 +22,7 @@
 
             // other libraries
             'rxjs': 'npm:rxjs',
-            'lodash': 'npm:lodash/lodash.js'
+            'rxjs/operators': 'npm:rxjs/operators',
         },
         // packages tells the System loader how to load when no filename and/or no extension
         packages: {
@@ -30,7 +30,12 @@
                 defaultExtension: 'js'
             },
             rxjs: {
-                defaultExtension: 'js'
+                defaultExtension: 'js',
+                main: 'index.js'
+            },
+            'rxjs/operators': {
+                defaultExtension: 'js',
+                main: 'index.js'
             }
         }
     });
